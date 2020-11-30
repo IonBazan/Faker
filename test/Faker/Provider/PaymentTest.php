@@ -4,7 +4,6 @@ namespace Faker\Test\Provider;
 
 use Faker\Calculator\Iban;
 use Faker\Calculator\Luhn;
-use Faker\Generator;
 use Faker\Provider\Base as BaseProvider;
 use Faker\Provider\DateTime as DateTimeProvider;
 use Faker\Provider\Payment as PaymentProvider;
@@ -13,25 +12,13 @@ use Faker\Test\TestCase;
 
 final class PaymentTest extends TestCase
 {
-    private $faker;
-
-    protected function setUp(): void
-    {
-        $faker = new Generator();
-        $faker->addProvider(new BaseProvider($faker));
-        $faker->addProvider(new DateTimeProvider($faker));
-        $faker->addProvider(new PersonProvider($faker));
-        $faker->addProvider(new PaymentProvider($faker));
-        $this->faker = $faker;
-    }
-
     public function localeDataProvider()
     {
         $providerPath = realpath(__DIR__ . '/../../../src/Faker/Provider');
         $localePaths = array_filter(glob($providerPath . '/*', GLOB_ONLYDIR));
         foreach ($localePaths as $path) {
             $parts = explode('/', $path);
-            $locales[] = [$parts[count($parts) - 1]];
+            $locales[] = array($parts[count($parts) - 1]);
         }
 
         return $locales;
@@ -40,7 +27,7 @@ final class PaymentTest extends TestCase
     public function loadLocalProviders($locale)
     {
         $providerPath = realpath(__DIR__ . '/../../../src/Faker/Provider');
-        if (file_exists($providerPath . '/' . $locale . '/Payment.php')) {
+        if (file_exists($providerPath.'/'.$locale.'/Payment.php')) {
             $payment = "\\Faker\\Provider\\$locale\\Payment";
             $this->faker->addProvider(new $payment($this->faker));
         }
@@ -48,17 +35,17 @@ final class PaymentTest extends TestCase
 
     public function testCreditCardTypeReturnsValidVendorName()
     {
-        $this->assertContains($this->faker->creditCardType, ['Visa', 'Visa Retired', 'MasterCard', 'American Express', 'Discover Card']);
+        self::assertContains($this->faker->creditCardType, array('Visa', 'Visa Retired', 'MasterCard', 'American Express', 'Discover Card'));
     }
 
     public function creditCardNumberProvider()
     {
-        return [
-            ['Discover Card', '/^6011\d{12}$/'],
-            ['Visa', '/^4\d{15}$/'],
-            ['Visa Retired', '/^4\d{12}$/'],
-            ['MasterCard', '/^(5[1-5]|2[2-7])\d{14}$/']
-        ];
+        return array(
+            array('Discover Card', '/^6011\d{12}$/'),
+            array('Visa', '/^4\d{15}$/'),
+            array('Visa Retired', '/^4\d{12}$/'),
+            array('MasterCard', '/^(5[1-5]|2[2-7])\d{14}$/')
+        );
     }
 
     /**
@@ -67,30 +54,30 @@ final class PaymentTest extends TestCase
     public function testCreditCardNumberReturnsValidCreditCardNumber($type, $regexp)
     {
         $cardNumber = $this->faker->creditCardNumber($type);
-        $this->assertMatchesRegularExpression($regexp, $cardNumber);
-        $this->assertTrue(Luhn::isValid($cardNumber));
+        self::assertMatchesRegularExpression($regexp, $cardNumber);
+        self::assertTrue(Luhn::isValid($cardNumber));
     }
 
     public function testCreditCardNumberCanFormatOutput()
     {
-        $this->assertMatchesRegularExpression('/^6011-\d{4}-\d{4}-\d{4}$/', $this->faker->creditCardNumber('Discover Card', true));
+        self::assertMatchesRegularExpression('/^6011-\d{4}-\d{4}-\d{4}$/', $this->faker->creditCardNumber('Discover Card', true));
     }
 
     public function testCreditCardExpirationDateReturnsValidDateByDefault()
     {
         $expirationDate = $this->faker->creditCardExpirationDate;
-        $this->assertTrue(intval($expirationDate->format('U')) > strtotime('now'));
-        $this->assertTrue(intval($expirationDate->format('U')) < strtotime('+36 months'));
+        self::assertTrue(intval($expirationDate->format('U')) > strtotime('now'));
+        self::assertTrue(intval($expirationDate->format('U')) < strtotime('+36 months'));
     }
 
     public function testRandomCard()
     {
         $cardDetails = $this->faker->creditCardDetails;
-        $this->assertEquals(count($cardDetails), 4);
-        $this->assertEquals(['type', 'number', 'name', 'expirationDate'], array_keys($cardDetails));
+        self::assertEquals(count($cardDetails), 4);
+        self::assertEquals(array('type', 'number', 'name', 'expirationDate'), array_keys($cardDetails));
     }
 
-    protected $ibanFormats = [
+    protected $ibanFormats = array(
         'AD' => '/^AD\d{2}\d{4}\d{4}[A-Z0-9]{12}$/',
         'AE' => '/^AE\d{2}\d{3}\d{16}$/',
         'AL' => '/^AL\d{2}\d{8}[A-Z0-9]{16}$/',
@@ -153,7 +140,7 @@ final class PaymentTest extends TestCase
         'TN' => '/^TN\d{2}\d{2}\d{3}\d{13}\d{2}$/',
         'TR' => '/^TR\d{2}\d{5}\d{1}[A-Z0-9]{16}$/',
         'VG' => '/^VG\d{2}[A-Z]{4}\d{16}$/',
-    ];
+    );
 
     /**
      * @dataProvider localeDataProvider
@@ -165,7 +152,7 @@ final class PaymentTest extends TestCase
 
         if (!isset($this->ibanFormats[$countryCode])) {
             // No IBAN format available
-            $this->markTestSkipped("bankAccountNumber not implemented for country $countryCode");
+            self::markTestSkipped("bankAccountNumber not implemented for country $countryCode");
             return;
         }
 
@@ -175,22 +162,22 @@ final class PaymentTest extends TestCase
             $iban = $this->faker->bankAccountNumber;
         } catch (\InvalidArgumentException $e) {
             // Not implemented, nothing to test
-            $this->markTestSkipped("bankAccountNumber not implemented for $locale");
+            self::markTestSkipped("bankAccountNumber not implemented for $locale");
             return;
         }
 
         // Test format
-        $this->assertMatchesRegularExpression($this->ibanFormats[$countryCode], $iban);
+        self::assertMatchesRegularExpression($this->ibanFormats[$countryCode], $iban);
 
         // Test checksum
-        $this->assertTrue(Iban::isValid($iban), "Checksum for $iban is invalid");
+        self::assertTrue(Iban::isValid($iban), "Checksum for $iban is invalid");
     }
 
     public function ibanFormatProvider()
     {
-        $return = [];
+        $return = array();
         foreach ($this->ibanFormats as $countryCode => $regex) {
-            $return[] = [$countryCode, $regex];
+            $return[] = array($countryCode, $regex);
         }
         return $return;
     }
@@ -202,9 +189,17 @@ final class PaymentTest extends TestCase
         $iban = $this->faker->iban($countryCode);
 
         // Test format
-        $this->assertMatchesRegularExpression($regex, $iban);
+        self::assertMatchesRegularExpression($regex, $iban);
 
         // Test checksum
-        $this->assertTrue(Iban::isValid($iban), "Checksum for $iban is invalid");
+        self::assertTrue(Iban::isValid($iban), "Checksum for $iban is invalid");
+    }
+
+    protected function getProviders(): iterable
+    {
+        yield new BaseProvider($this->faker);
+        yield new DateTimeProvider($this->faker);
+        yield new PersonProvider($this->faker);
+        yield new PaymentProvider($this->faker);
     }
 }
