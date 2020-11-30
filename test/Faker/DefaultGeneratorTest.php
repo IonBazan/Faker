@@ -8,7 +8,7 @@ final class DefaultGeneratorTest extends TestCase
 {
     public function testGeneratorReturnsNullByDefault()
     {
-        $generator = new DefaultGenerator;
+        $generator = new DefaultGenerator();
         self::assertNull($generator->value);
     }
 

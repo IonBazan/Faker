@@ -18,7 +18,7 @@ final class PaymentTest extends TestCase
      * Validation taken from https://github.com/amnesty/drupal-nif-nie-cif-validator/
      * @link https://github.com/amnesty/drupal-nif-nie-cif-validator/blob/master/includes/nif-nie-cif.php
      */
-    function isValidCIF($docNumber)
+    public function isValidCIF($docNumber)
     {
         $fixedDocNumber = strtoupper($docNumber);
 
@@ -49,5 +49,4 @@ final class PaymentTest extends TestCase
     {
         yield new Payment($this->faker);
     }
-
 }

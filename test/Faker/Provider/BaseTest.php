@@ -290,7 +290,7 @@ final class BaseTest extends TestCase
     public function testBothifyUtf()
     {
         $utf = 'œ∑´®†¥¨ˆøπ“‘和製╯°□°╯︵ ┻━┻🐵 🙈 ﺚﻣ ﻦﻔﺳ ﺲﻘﻄﺗ ﻮﺑﺎﻠﺘﺣﺪﻳﺩ،, ﺝﺰﻳﺮﺘﻳ ﺏﺎﺴﺘﺧﺩﺎﻣ ﺄﻧ ﺪﻧﻭ. ﺇﺫ ﻪﻧﺍ؟ ﺎﻠﺴﺗﺍﺭ ﻮﺘ';
-        self::assertMatchesRegularExpression('/'.$utf.'foo\dB[a-z]a([a-z]|\d)r/u', BaseProvider::bothify($utf.'foo#B?a*r'));
+        self::assertMatchesRegularExpression('/' . $utf . 'foo\dB[a-z]a([a-z]|\d)r/u', BaseProvider::bothify($utf . 'foo#B?a*r'));
     }
 
     public function testAsciifyReturnsSameStringWhenItContainsNoStarSign()
@@ -367,7 +367,7 @@ final class BaseTest extends TestCase
     {
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $faker->addProvider(new \ArrayObject(array(1))); // hack because method_exists forbids stubs
+        $faker->addProvider(new \ArrayObject([1])); // hack because method_exists forbids stubs
         self::assertEquals(1, $faker->optional(100)->count);
         self::assertNull($faker->optional(0)->count);
     }
@@ -376,7 +376,7 @@ final class BaseTest extends TestCase
     {
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $faker->addProvider(new \ArrayObject(array(1))); // hack because method_exists forbids stubs
+        $faker->addProvider(new \ArrayObject([1])); // hack because method_exists forbids stubs
         self::assertEquals(1, $faker->optional(100)->count());
         self::assertNull($faker->optional(0)->count());
     }
@@ -385,7 +385,7 @@ final class BaseTest extends TestCase
     {
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $values = array();
+        $values = [];
         for ($i=0; $i < 10; $i++) {
             $values[]= $faker->optional()->randomDigit;
         }
@@ -425,7 +425,7 @@ final class BaseTest extends TestCase
     {
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $faker->addProvider(new \ArrayObject(array(1))); // hack because method_exists forbids stubs
+        $faker->addProvider(new \ArrayObject([1])); // hack because method_exists forbids stubs
         self::assertEquals(1, $faker->unique()->count);
     }
 
@@ -433,7 +433,7 @@ final class BaseTest extends TestCase
     {
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $faker->addProvider(new \ArrayObject(array(1))); // hack because method_exists forbids stubs
+        $faker->addProvider(new \ArrayObject([1])); // hack because method_exists forbids stubs
         self::assertEquals(1, $faker->unique()->count());
     }
 
@@ -441,12 +441,12 @@ final class BaseTest extends TestCase
     {
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $values = array();
+        $values = [];
         for ($i=0; $i < 10; $i++) {
             $values[]= $faker->unique()->randomDigit;
         }
         sort($values);
-        self::assertEquals(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), $values);
+        self::assertEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], $values);
     }
 
     public function testUniqueThrowsExceptionWhenNoUniqueValueCanBeGenerated()
@@ -463,7 +463,7 @@ final class BaseTest extends TestCase
     {
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $values = array();
+        $values = [];
         for ($i=0; $i < 10; $i++) {
             $values[]= $faker->unique()->randomDigit;
         }
@@ -472,7 +472,7 @@ final class BaseTest extends TestCase
             $values[]= $faker->unique()->randomDigit;
         }
         sort($values);
-        self::assertEquals(array(0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9), $values);
+        self::assertEquals([0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9], $values);
     }
 
     public function testValidAllowsChainingPropertyAccess()
@@ -493,8 +493,8 @@ final class BaseTest extends TestCase
     {
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $values = array();
-        $evenValidator = function($digit) {
+        $values = [];
+        $evenValidator = function ($digit) {
             return $digit % 2 === 0;
         };
         for ($i=0; $i < 50; $i++) {
@@ -502,7 +502,7 @@ final class BaseTest extends TestCase
         }
         $uniqueValues = array_keys($values);
         sort($uniqueValues);
-        self::assertEquals(array(0, 2, 4, 6, 8), $uniqueValues);
+        self::assertEquals([0, 2, 4, 6, 8], $uniqueValues);
     }
 
     public function testValidThrowsExceptionWhenNoValidValueCanBeGenerated()
@@ -510,11 +510,11 @@ final class BaseTest extends TestCase
         $this->expectException(\OverflowException::class);
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $evenValidator = function($digit) {
+        $evenValidator = function ($digit) {
             return $digit % 2 === 0;
         };
         for ($i=0; $i < 11; $i++) {
-            $faker->valid($evenValidator)->randomElement(array(1, 3, 5, 7, 9));
+            $faker->valid($evenValidator)->randomElement([1, 3, 5, 7, 9]);
         }
     }
 
@@ -523,7 +523,7 @@ final class BaseTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $faker->valid(12)->randomElement(array(1, 3, 5, 7, 9));
+        $faker->valid(12)->randomElement([1, 3, 5, 7, 9]);
     }
 
     public function testRandomElementsThrowsWhenRequestingTooManyKeys()

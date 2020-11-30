@@ -37,7 +37,7 @@ final class PersonTest extends TestCase
             $max="2099";
             for ($i = 0; $i < 10; $i++) {
                 $birthdate = $this->faker->dateTimeBetween('1800-01-01 00:00:00', '1899-12-31 23:59:59');
-                $pin = $this->faker->personalIdentityNumber($birthdate, NULL, true);
+                $pin = $this->faker->personalIdentityNumber($birthdate, null, true);
                 self::assertMatchesRegularExpression('/^[0-9]{6}\+[0-9]{3}[0-9ABCDEFHJKLMNPRSTUVWXY]$/', $pin);
             }
         } else { // timestamp limit for 32-bit computer

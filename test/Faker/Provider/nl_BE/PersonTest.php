@@ -19,7 +19,7 @@ final class PersonTest extends TestCase
         $ctrlNumber = substr($rrn, 9, 2);
         $calcCtrl = 97 - (substr($rrn, 0, 9) % 97);
         $altcalcCtrl = 97 - ((2 . substr($rrn, 0, 9)) % 97);
-        self::assertContains((int) $ctrlNumber, array($calcCtrl, $altcalcCtrl));
+        self::assertContains((int) $ctrlNumber, [$calcCtrl, $altcalcCtrl]);
 
         $middle = substr($rrn, 6, 3);
         self::assertGreaterThan(1, $middle);

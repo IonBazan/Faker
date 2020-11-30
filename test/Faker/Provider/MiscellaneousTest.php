@@ -9,7 +9,7 @@ final class MiscellaneousTest extends TestCase
 {
     public function testBoolean()
     {
-        self::assertContains(Miscellaneous::boolean(), array(true, false));
+        self::assertContains(Miscellaneous::boolean(), [true, false]);
     }
 
     public function testMd5()
