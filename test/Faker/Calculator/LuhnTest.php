@@ -30,26 +30,26 @@ final class LuhnTest extends TestCase
      */
     public function testComputeCheckDigit($partialNumber, $checkDigit)
     {
-        $this->assertIsString($checkDigit);
-        $this->assertEquals($checkDigit, Luhn::computeCheckDigit($partialNumber));
+        self::assertIsString($checkDigit);
+        self::assertEquals($checkDigit, Luhn::computeCheckDigit($partialNumber));
     }
 
     public function validatorProvider()
     {
-        return array(
-            array('79927398710', false),
-            array('79927398711', false),
-            array('79927398712', false),
-            array('79927398713', true),
-            array('79927398714', false),
-            array('79927398715', false),
-            array('79927398716', false),
-            array('79927398717', false),
-            array('79927398718', false),
-            array('79927398719', false),
-            array(79927398713, true),
-            array(79927398714, false),
-        );
+        return [
+            ['79927398710', false],
+            ['79927398711', false],
+            ['79927398712', false],
+            ['79927398713', true],
+            ['79927398714', false],
+            ['79927398715', false],
+            ['79927398716', false],
+            ['79927398717', false],
+            ['79927398718', false],
+            ['79927398719', false],
+            [79927398713, true],
+            [79927398714, false],
+        ];
     }
 
     /**
@@ -57,7 +57,7 @@ final class LuhnTest extends TestCase
      */
     public function testIsValid($number, $isValid)
     {
-        $this->assertEquals($isValid, Luhn::isValid($number));
+        self::assertEquals($isValid, Luhn::isValid($number));
     }
 
     public function testGenerateLuhnNumberWithInvalidPrefix()
