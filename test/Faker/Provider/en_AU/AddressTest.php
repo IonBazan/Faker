@@ -2,47 +2,36 @@
 
 namespace Faker\Provider\en_AU;
 
-use Faker\Generator;
 use Faker\Test\TestCase;
 
 final class AddressTest extends TestCase
 {
+    public function testCityPrefix()
+    {
+        $cityPrefix = $this->faker->cityPrefix();
+        self::assertNotEmpty($cityPrefix);
+        self::assertIsString($cityPrefix);
+        self::assertMatchesRegularExpression('/[A-Z][a-z]+/', $cityPrefix);
+    }
 
-  /**
-   * @var Faker\Generator
-   */
-  private $faker;
+    public function testStreetSuffix()
+    {
+        $streetSuffix = $this->faker->streetSuffix();
+        self::assertNotEmpty($streetSuffix);
+        self::assertIsString($streetSuffix);
+        self::assertMatchesRegularExpression('/[A-Z][a-z]+/', $streetSuffix);
+    }
 
-  protected function setUp(): void
-  {
-    $faker = new Generator();
-    $faker->addProvider(new Address($faker));
-    $this->faker = $faker;
-  }
+    public function testState()
+    {
+        $state = $this->faker->state();
+        self::assertNotEmpty($state);
+        self::assertIsString($state);
+        self::assertMatchesRegularExpression('/[A-Z][a-z]+/', $state);
+    }
 
-  public function testCityPrefix()
-  {
-    $cityPrefix = $this->faker->cityPrefix();
-    $this->assertNotEmpty($cityPrefix);
-    $this->assertIsString($cityPrefix);
-    $this->assertMatchesRegularExpression('/[A-Z][a-z]+/', $cityPrefix);
-  }
-
-  public function testStreetSuffix()
-  {
-    $streetSuffix = $this->faker->streetSuffix();
-    $this->assertNotEmpty($streetSuffix);
-    $this->assertIsString($streetSuffix);
-    $this->assertMatchesRegularExpression('/[A-Z][a-z]+/', $streetSuffix);
-  }
-
-  public function testState()
-  {
-    $state = $this->faker->state();
-    $this->assertNotEmpty($state);
-    $this->assertIsString($state);
-    $this->assertMatchesRegularExpression('/[A-Z][a-z]+/', $state);
-  }
+    protected function getProviders(): iterable
+    {
+        yield new Address($this->faker);
+    }
 }
-
-?>

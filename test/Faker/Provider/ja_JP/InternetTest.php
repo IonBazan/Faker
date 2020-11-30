@@ -2,7 +2,6 @@
 
 namespace Faker\Test\Provider\ja_JP;
 
-use Faker\Generator;
 use Faker\Provider\ja_JP\Internet;
 use Faker\Test\TestCase;
 
@@ -10,19 +9,16 @@ final class InternetTest extends TestCase
 {
     public function testUserName()
     {
-        $faker = new Generator();
-        $faker->addProvider(new Internet($faker));
-        $faker->seed(1);
-
-        $this->assertEquals('akira72', $faker->userName);
+        self::assertEquals('akira72', $this->faker->userName);
     }
 
     public function testDomainName()
     {
-        $faker = new Generator();
-        $faker->addProvider(new Internet($faker));
-        $faker->seed(1);
+        self::assertEquals('nakajima.com', $this->faker->domainName);
+    }
 
-        $this->assertEquals('nakajima.com', $faker->domainName);
+    protected function getProviders(): iterable
+    {
+        yield new Internet($this->faker);
     }
 }

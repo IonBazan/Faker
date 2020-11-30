@@ -23,32 +23,32 @@ final class TextTest extends TestCase
 
     function testItShouldAppendEndPunctToTheEndOfString()
     {
-        $this->assertSame(
+        self::assertSame(
             'ჭეშმარიტია. ჩვენც ისე.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('ჭეშმარიტია. ჩვენც ისე '))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'ჭეშმარიტია. ჩვენც ისე.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('ჭეშმარიტია. ჩვენც ისე— '))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'ჭეშმარიტია. ჩვენც ისე.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('ჭეშმარიტია. ჩვენც ისე,  '))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'ჭეშმარიტია. ჩვენც ისე!.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('ჭეშმარიტია. ჩვენც ისე! '))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'ჭეშმარიტია. ჩვენც ისე.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('ჭეშმარიტია. ჩვენც ისე; '))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'ჭეშმარიტია. ჩვენც ისე.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('ჭეშმარიტია. ჩვენც ისე: '))
         );

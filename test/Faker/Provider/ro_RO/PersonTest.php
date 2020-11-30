@@ -2,7 +2,6 @@
 
 namespace Faker\Test\Provider\ro_RO;
 
-use Faker\Generator;
 use Faker\Provider\DateTime;
 use Faker\Provider\ro_RO\Person;
 use Faker\Test\TestCase;
@@ -10,26 +9,6 @@ use Faker\Test\TestCase;
 final class PersonTest extends TestCase
 {
     const TEST_CNP_REGEX = '/^[1-9][0-9]{2}(?:0[1-9]|1[012])(?:0[1-9]|[12][0-9]|3[01])(?:0[1-9]|[123][0-9]|4[0-6]|5[12])[0-9]{3}[0-9]$/';
-
-    /**
-     * @var \Faker\Generator
-     *
-     */
-    protected $faker;
-
-    protected function setUp(): void
-    {
-        $faker = new Generator();
-        $faker->addProvider(new DateTime($faker));
-        $faker->addProvider(new Person($faker));
-        $faker->setDefaultTimezone('Europe/Bucharest');
-        $this->faker = $faker;
-    }
-
-    protected function tearDown(): void
-    {
-        $this->faker->setDefaultTimezone();
-    }
 
     public function invalidGenderProvider()
     {
@@ -99,7 +78,7 @@ final class PersonTest extends TestCase
     public function test_allRandom_returnsValidCnp()
     {
         $cnp = $this->faker->cnp;
-        $this->assertTrue(
+        self::assertTrue(
             $this->isValidCnp($cnp),
             sprintf("Invalid CNP '%' generated", $cnp)
         );
@@ -111,13 +90,13 @@ final class PersonTest extends TestCase
     public function test_validGender_returnsValidCnp()
     {
         $cnp = $this->faker->cnp(Person::GENDER_MALE);
-        $this->assertTrue(
+        self::assertTrue(
             $this->isValidMaleCnp($cnp),
             sprintf("Invalid CNP '%' generated for '%s' gender", $cnp, Person::GENDER_MALE)
         );
 
         $cnp = $this->faker->cnp(Person::GENDER_FEMALE);
-        $this->assertTrue(
+        self::assertTrue(
             $this->isValidFemaleCnp($cnp),
             sprintf("Invalid CNP '%' generated for '%s' gender", $cnp, Person::GENDER_FEMALE)
         );
@@ -142,7 +121,7 @@ final class PersonTest extends TestCase
     public function test_validYear_returnsValidCnp($value)
     {
         $cnp = $this->faker->cnp(null, $value);
-        $this->assertTrue(
+        self::assertTrue(
             $this->isValidCnp($cnp),
             sprintf("Invalid CNP '%' generated for valid year '%s'", $cnp, $value)
         );
@@ -166,7 +145,7 @@ final class PersonTest extends TestCase
     public function test_validCountyCode_returnsValidCnp($value)
     {
         $cnp = $this->faker->cnp(null, null, $value);
-        $this->assertTrue(
+        self::assertTrue(
             $this->isValidCnp($cnp),
             sprintf("Invalid CNP '%' generated for valid year '%s'", $cnp, $value)
         );
@@ -188,11 +167,11 @@ final class PersonTest extends TestCase
     public function test_nonResident_returnsValidCnp()
     {
         $cnp = $this->faker->cnp(null, null, null, false);
-        $this->assertTrue(
+        self::assertTrue(
             $this->isValidCnp($cnp),
             sprintf("Invalid CNP '%' generated for non resident", $cnp)
         );
-        $this->assertStringStartsWith(
+        self::assertStringStartsWith(
             '9',
             $cnp,
             sprintf("Invalid CNP '%' generated for non resident (should start with 9)", $cnp)
@@ -212,7 +191,7 @@ final class PersonTest extends TestCase
     public function test_validInputData_returnsValidCnp($gender, $dateOfBirth, $county, $isResident, $expectedCnpStart)
     {
         $cnp = $this->faker->cnp($gender, $dateOfBirth, $county, $isResident);
-        $this->assertStringStartsWith(
+        self::assertStringStartsWith(
             $expectedCnpStart,
             $cnp,
             sprintf("Invalid CNP '%' generated for non valid data", $cnp)
@@ -248,5 +227,11 @@ final class PersonTest extends TestCase
         }
 
         return false;
+    }
+
+    protected function getProviders(): iterable
+    {
+        yield new Person($this->faker);
+        yield new DateTime($this->faker);
     }
 }

@@ -37,10 +37,10 @@ final class ProviderOverrideTest extends TestCase
     {
         $faker = Faker\Factory::create($locale);
 
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->city);
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->postcode);
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->address);
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->country);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->city);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->postcode);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->address);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->country);
     }
 
 
@@ -52,7 +52,7 @@ final class ProviderOverrideTest extends TestCase
     {
         $faker = Faker\Factory::create($locale);
 
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->company);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->company);
     }
 
 
@@ -64,8 +64,8 @@ final class ProviderOverrideTest extends TestCase
     {
         $faker = Faker\Factory::create($locale);
 
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->century);
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->timezone);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->century);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->timezone);
     }
 
 
@@ -76,17 +76,17 @@ final class ProviderOverrideTest extends TestCase
     public function testInternet($locale = null)
     {
         if ($locale && $locale !== 'en_US' && !class_exists('Transliterator')) {
-            $this->markTestSkipped('Transliterator class not available (intl extension)');
+            self::markTestSkipped('Transliterator class not available (intl extension)');
         }
 
         $faker = Faker\Factory::create($locale);
 
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->userName);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->userName);
 
-        $this->assertMatchesRegularExpression(static::TEST_EMAIL_REGEX, $faker->email);
-        $this->assertMatchesRegularExpression(static::TEST_EMAIL_REGEX, $faker->safeEmail);
-        $this->assertMatchesRegularExpression(static::TEST_EMAIL_REGEX, $faker->freeEmail);
-        $this->assertMatchesRegularExpression(static::TEST_EMAIL_REGEX, $faker->companyEmail);
+        self::assertMatchesRegularExpression(static::TEST_EMAIL_REGEX, $faker->email);
+        self::assertMatchesRegularExpression(static::TEST_EMAIL_REGEX, $faker->safeEmail);
+        self::assertMatchesRegularExpression(static::TEST_EMAIL_REGEX, $faker->freeEmail);
+        self::assertMatchesRegularExpression(static::TEST_EMAIL_REGEX, $faker->companyEmail);
     }
 
 
@@ -98,10 +98,10 @@ final class ProviderOverrideTest extends TestCase
     {
         $faker = Faker\Factory::create($locale);
 
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->name);
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->title);
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->firstName);
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->lastName);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->name);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->title);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->firstName);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->lastName);
     }
 
 
@@ -113,7 +113,7 @@ final class ProviderOverrideTest extends TestCase
     {
         $faker = Faker\Factory::create($locale);
 
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->phoneNumber);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->phoneNumber);
     }
 
 
@@ -125,7 +125,7 @@ final class ProviderOverrideTest extends TestCase
     {
         $faker = Faker\Factory::create($locale);
 
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->userAgent);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->userAgent);
     }
 
 
@@ -139,7 +139,7 @@ final class ProviderOverrideTest extends TestCase
     {
         $faker = Faker\Factory::create($locale);
 
-        $this->assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->uuid);
+        self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->uuid);
     }
 
 

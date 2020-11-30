@@ -2,29 +2,20 @@
 
 namespace Faker\Test\Provider\fr_FR;
 
-use Faker\Generator;
 use Faker\Provider\fr_FR\Address;
 use Faker\Test\TestCase;
 
 final class AddressTest extends TestCase
 {
+    public function testSecondaryAddress()
+    {
+        $secondaryAdress = $this->faker->secondaryAddress();
+        self::assertNotEmpty($secondaryAdress);
+        self::assertIsString($secondaryAdress);
+    }
 
-/**
- * @var Faker\Generator
- */
-  private $faker;
-
-  protected function setUp(): void
-  {
-      $faker = new Generator();
-      $faker->addProvider(new Address($faker));
-      $this->faker = $faker;
-  }
-
-  public function testSecondaryAddress()
-  {
-    $secondaryAdress = $this->faker->secondaryAddress();
-    $this->assertNotEmpty($secondaryAdress);
-    $this->assertIsString($secondaryAdress);
-  }
+    protected function getProviders(): iterable
+    {
+        yield new Address($this->faker);
+    }
 }

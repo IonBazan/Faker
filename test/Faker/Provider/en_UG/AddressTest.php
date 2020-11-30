@@ -2,43 +2,34 @@
 
 namespace Faker\Test\Provider\en_UG;
 
-use Faker\Generator;
 use Faker\Provider\en_UG\Address;
 use Faker\Test\TestCase;
 
 final class AddressTest extends TestCase
 {
+    public function testCityName()
+    {
+        $city = $this->faker->cityName();
+        self::assertNotEmpty($city);
+        self::assertIsString($city);
+    }
 
-/**
- * @var Faker\Generator
- */
-  private $faker;
+    public function testDistrict()
+    {
+        $district = $this->faker->district();
+        self::assertNotEmpty($district);
+        self::assertIsString($district);
+    }
 
-  protected function setUp(): void
-  {
-      $faker = new Generator();
-      $faker->addProvider(new Address($faker));
-      $this->faker = $faker;
-  }
+    public function testRegion()
+    {
+        $region = $this->faker->region();
+        self::assertNotEmpty($region);
+        self::assertIsString($region);
+    }
 
-  public function testCityName()
-  {
-    $city = $this->faker->cityName();
-    $this->assertNotEmpty($city);
-    $this->assertIsString($city);
-  }
-
-  public function testDistrict()
-  {
-    $district = $this->faker->district();
-    $this->assertNotEmpty($district);
-    $this->assertIsString($district);
-  }
-
-  public function testRegion()
-  {
-    $region = $this->faker->region();
-    $this->assertNotEmpty($region);
-    $this->assertIsString($region);
-  }
+    protected function getProviders(): iterable
+    {
+        yield new Address($this->faker);
+    }
 }

@@ -23,32 +23,32 @@ final class TextTest extends TestCase
 
     function testItShouldAppendEndPunctToTheEndOfString()
     {
-        $this->assertSame(
+        self::assertSame(
             'Арыстан баб кесенесі - көне Отырар.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('Арыстан баб кесенесі - көне Отырар '))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'Арыстан баб кесенесі - көне Отырар.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('Арыстан баб кесенесі - көне Отырар— '))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'Арыстан баб кесенесі - көне Отырар.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('Арыстан баб кесенесі - көне Отырар,  '))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'Арыстан баб кесенесі - көне Отырар!.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('Арыстан баб кесенесі - көне Отырар! '))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'Арыстан баб кесенесі - көне Отырар.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('Арыстан баб кесенесі - көне Отырар: '))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'Арыстан баб кесенесі - көне Отырар.',
             $this->getMethod('appendEnd')->invokeArgs(null, array('Арыстан баб кесенесі - көне Отырар; '))
         );

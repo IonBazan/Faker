@@ -9,32 +9,32 @@ final class ImageTest extends TestCase
 {
     public function testImageUrlUses640x680AsTheDefaultSize()
     {
-        $this->assertMatchesRegularExpression(
-            '#^https://via.placeholder.com/640x480.png/#', 
+        self::assertMatchesRegularExpression(
+            '#^https://via.placeholder.com/640x480.png/#',
             Image::imageUrl()
         );
     }
 
     public function testImageUrlAcceptsCustomWidthAndHeight()
     {
-        $this->assertMatchesRegularExpression(
-            '#^https://via.placeholder.com/800x400.png/#', 
+        self::assertMatchesRegularExpression(
+            '#^https://via.placeholder.com/800x400.png/#',
             Image::imageUrl(800, 400)
         );
     }
 
     public function testImageUrlAcceptsCustomCategory()
     {
-        $this->assertMatchesRegularExpression(
-            '#^https://via.placeholder.com/800x400.png/[\w]{6}\?text=nature\+.*#', 
+        self::assertMatchesRegularExpression(
+            '#^https://via.placeholder.com/800x400.png/[\w]{6}\?text=nature\+.*#',
             Image::imageUrl(800, 400, 'nature')
         );
     }
 
     public function testImageUrlAcceptsCustomText()
     {
-        $this->assertMatchesRegularExpression(
-            '#^https://via.placeholder.com/800x400.png/[\w]{6}\?text=nature\+Faker#', 
+        self::assertMatchesRegularExpression(
+            '#^https://via.placeholder.com/800x400.png/[\w]{6}\?text=nature\+Faker#',
             Image::imageUrl(800, 400, 'nature', false, 'Faker')
         );
     }
@@ -50,8 +50,8 @@ final class ImageTest extends TestCase
             false
         );
 
-        $this->assertMatchesRegularExpression(
-            '#^https://via.placeholder.com/800x400.png/[\w]{6}\?text=nature\+Faker#', 
+        self::assertMatchesRegularExpression(
+            '#^https://via.placeholder.com/800x400.png/[\w]{6}\?text=nature\+Faker#',
             $imageUrl
         );
     }
@@ -67,8 +67,8 @@ final class ImageTest extends TestCase
             true
         );
 
-        $this->assertMatchesRegularExpression(
-            '#^https://via.placeholder.com/800x400.png/CCCCCC\?text=nature\+Faker#', 
+        self::assertMatchesRegularExpression(
+            '#^https://via.placeholder.com/800x400.png/CCCCCC\?text=nature\+Faker#',
             $imageUrl
         );
     }
@@ -78,8 +78,8 @@ final class ImageTest extends TestCase
         $url = Image::imageUrl(800, 400);
         $splitUrl = preg_split('/\?text=/', $url);
 
-        $this->assertEquals(count($splitUrl), 2);
-        $this->assertMatchesRegularExpression('#\w*#', $splitUrl[1]);
+        self::assertEquals(count($splitUrl), 2);
+        self::assertMatchesRegularExpression('#\w*#', $splitUrl[1]);
     }
 
     public function testDownloadWithDefaults()
@@ -98,14 +98,14 @@ final class ImageTest extends TestCase
         }
 
         $file = Image::image(sys_get_temp_dir());
-        $this->assertFileExists($file);
+        self::assertFileExists($file);
         if (function_exists('getimagesize')) {
             list($width, $height, $type, $attr) = getimagesize($file);
-            $this->assertEquals(640, $width);
-            $this->assertEquals(480, $height);
-            $this->assertEquals(constant('IMAGETYPE_PNG'), $type);
+            self::assertEquals(640, $width);
+            self::assertEquals(480, $height);
+            self::assertEquals(constant('IMAGETYPE_PNG'), $type);
         } else {
-            $this->assertEquals('png', pathinfo($file, PATHINFO_EXTENSION));
+            self::assertEquals('png', pathinfo($file, PATHINFO_EXTENSION));
         }
         if (file_exists($file)) {
             unlink($file);

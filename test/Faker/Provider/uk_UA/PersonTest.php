@@ -2,7 +2,6 @@
 
 namespace Faker\Test\Provider\uk_UA;
 
-use Faker\Generator;
 use Faker\Provider\uk_UA\Person;
 use Faker\Test\TestCase;
 
@@ -10,48 +9,31 @@ final class PersonTest extends TestCase
 {
     public function testFirstNameMaleReturns()
     {
-        $faker = new Generator();
-        $faker->addProvider(new Person($faker));
-        $faker->seed(1);
-
-        $this->assertEquals('Максим', $faker->firstNameMale());
+        self::assertEquals('Максим', $this->faker->firstNameMale());
     }
 
     public function testFirstNameFemaleReturns()
     {
-        $faker = new Generator();
-        $faker->addProvider(new Person($faker));
-        $faker->seed(1);
-
-        $this->assertEquals('Людмила', $faker->firstNameFemale());
+        self::assertEquals('Людмила', $this->faker->firstNameFemale());
     }
 
     public function testMiddleNameMaleReturns()
     {
-        $faker = new Generator();
-        $faker->addProvider(new Person($faker));
-        $faker->seed(1);
-
-        $this->assertEquals('Миколайович', $faker->middleNameMale());
+        self::assertEquals('Миколайович', $this->faker->middleNameMale());
     }
 
     public function testMiddleNameFemaleReturns()
     {
-        $faker = new Generator();
-        $faker->addProvider(new Person($faker));
-        $faker->seed(1);
-
-        $this->assertEquals('Миколаївна', $faker->middleNameFemale());
+        self::assertEquals('Миколаївна', $this->faker->middleNameFemale());
     }
 
     public function testLastNameReturns()
     {
-        $faker = new Generator();
-        $faker->addProvider(new Person($faker));
-        $faker->seed(1);
-
-        $this->assertEquals('Броваренко', $faker->lastName());
+        self::assertEquals('Броваренко', $this->faker->lastName());
     }
 
-
+    protected function getProviders(): iterable
+    {
+        yield new Person($this->faker);
+    }
 }
