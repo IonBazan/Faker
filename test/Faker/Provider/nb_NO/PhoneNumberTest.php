@@ -9,12 +9,12 @@ final class PhoneNumberTest extends TestCase
 {
     public function testMobileNumber()
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             $number = $this->faker->mobileNumber;
             $length = strlen($number);
 
             // Check that number starts with 4 or 9 when country code is included
-            if ($length === 11) {
+            if (11 === $length) {
                 $testChar = substr($number, 3, 1);
                 self::assertEquals(11, strlen($number));
                 self::assertContains((int) $testChar, [4, 9]);
@@ -22,16 +22,16 @@ final class PhoneNumberTest extends TestCase
             }
 
             // Check numbers start with 4 or 9 when no country code is included
-            if ($length === 10 || $length === 8) {
+            if (10 === $length || 8 === $length) {
                 $testChar = substr($number, 0, 1);
                 self::assertContains((int) $testChar, [4, 9]);
             }
 
-            if ($length === 10) {
+            if (10 === $length) {
                 self::assertMatchesRegularExpression('/^[49]{1}[0-9]{2} [0-9]{2} [0-9]{3}$/', $number);
             }
 
-            if ($length === 8) {
+            if (8 === $length) {
                 self::assertMatchesRegularExpression('/^[49]{1}[0-9]{7}$/', $number);
             }
         }

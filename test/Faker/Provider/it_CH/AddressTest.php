@@ -8,13 +8,13 @@ use Faker\Test\TestCase;
 
 final class AddressTest extends TestCase
 {
-    public function testCanton ()
+    public function testCanton()
     {
         $canton = $this->faker->canton();
         self::assertIsArray($canton);
         self::assertCount(1, $canton);
 
-        foreach ($canton as $cantonShort => $cantonName){
+        foreach ($canton as $cantonShort => $cantonName) {
             self::assertIsString($cantonShort);
             self::assertEquals(2, strlen($cantonShort));
             self::assertIsString($cantonName);
@@ -22,21 +22,21 @@ final class AddressTest extends TestCase
         }
     }
 
-    public function testCantonName ()
+    public function testCantonName()
     {
         $cantonName = $this->faker->cantonName();
         self::assertIsString($cantonName);
         self::assertGreaterThan(2, strlen($cantonName));
     }
 
-    public function testCantonShort ()
+    public function testCantonShort()
     {
         $cantonShort = $this->faker->cantonShort();
         self::assertIsString($cantonShort);
         self::assertEquals(2, strlen($cantonShort));
     }
 
-    public function testAddress ()
+    public function testAddress()
     {
         $address = $this->faker->address();
         self::assertIsString($address);

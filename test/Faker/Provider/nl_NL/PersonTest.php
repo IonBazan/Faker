@@ -12,13 +12,12 @@ final class PersonTest extends TestCase
         $idNumber = $this->faker->idNumber();
         self::assertEquals(9, strlen($idNumber));
 
-
         $sum = -1 * $idNumber % 10;
-        for ($multiplier = 2; $idNumber > 0; $multiplier++) {
+        for ($multiplier = 2; $idNumber > 0; ++$multiplier) {
             $val = ($idNumber /= 10) % 10;
             $sum += $multiplier * $val;
         }
-        self::assertTrue($sum != 0 && $sum % 11 == 0);
+        self::assertTrue(0 != $sum && 0 == $sum % 11);
     }
 
     protected function getProviders(): iterable

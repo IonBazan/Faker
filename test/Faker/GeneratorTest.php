@@ -57,10 +57,10 @@ final class GeneratorTest extends TestCase
 
     public function testFormatTransfersArgumentsToFormatter()
     {
-        $this->faker = new Generator;
+        $this->faker = new Generator();
         $provider = new FooProvider();
         $this->faker->addProvider($provider);
-        self::assertEquals('bazfoo', $this->faker->format('fooFormatterWithArguments', array('foo')));
+        self::assertEquals('bazfoo', $this->faker->format('fooFormatterWithArguments', ['foo']));
     }
 
     public function testParseReturnsSameStringWhenItContainsNoCurlyBraces()
@@ -119,7 +119,7 @@ final class FooProvider
 
     public function fooFormatterWithArguments($value = '')
     {
-        return 'baz' . $value;
+        return 'baz'.$value;
     }
 }
 

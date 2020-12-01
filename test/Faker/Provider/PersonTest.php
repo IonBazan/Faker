@@ -27,12 +27,12 @@ final class PersonTest extends TestCase
 
     public function testFirstNameMale()
     {
-        self::assertContains(Person::firstNameMale(), array('John'));
+        self::assertContains(Person::firstNameMale(), ['John']);
     }
 
     public function testFirstNameFemale()
     {
-        self::assertContains(Person::firstNameFemale(), array('Jane'));
+        self::assertContains(Person::firstNameFemale(), ['Jane']);
     }
 
     /**
@@ -55,12 +55,12 @@ final class PersonTest extends TestCase
 
     public function testTitleMale()
     {
-        self::assertContains(Person::titleMale(), array('Mr.', 'Dr.', 'Prof.'));
+        self::assertContains(Person::titleMale(), ['Mr.', 'Dr.', 'Prof.']);
     }
 
     public function testTitleFemale()
     {
-        self::assertContains(Person::titleFemale(), array('Mrs.', 'Ms.', 'Miss', 'Dr.', 'Prof.'));
+        self::assertContains(Person::titleFemale(), ['Mrs.', 'Ms.', 'Miss', 'Dr.', 'Prof.']);
     }
 
     public function testLastNameReturnsDoe()
@@ -70,10 +70,10 @@ final class PersonTest extends TestCase
 
     public function testNameReturnsFirstNameAndLastName()
     {
-        self::assertContains($this->faker->name(), array('John Doe', 'Jane Doe'));
-        self::assertContains($this->faker->name('foobar'), array('John Doe', 'Jane Doe'));
-        self::assertContains($this->faker->name('male'), array('John Doe'));
-        self::assertContains($this->faker->name('female'), array('Jane Doe'));
+        self::assertContains($this->faker->name(), ['John Doe', 'Jane Doe']);
+        self::assertContains($this->faker->name('foobar'), ['John Doe', 'Jane Doe']);
+        self::assertContains($this->faker->name('male'), ['John Doe']);
+        self::assertContains($this->faker->name('female'), ['Jane Doe']);
     }
 
     protected function getProviders(): iterable

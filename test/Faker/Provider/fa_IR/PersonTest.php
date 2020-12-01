@@ -9,7 +9,7 @@ final class PersonTest extends TestCase
 {
     public function testNationalCode()
     {
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 100; ++$i) {
             $nationalCode = $this->faker->nationalCode;
 
             // nationalCode should be in the format ##########
@@ -25,15 +25,15 @@ final class PersonTest extends TestCase
             $sum = 0;
             $count = 0;
 
-            for ($j = 10; $j > 1; $j--) {
+            for ($j = 10; $j > 1; --$j) {
                 $sum += $nationalCode[$count] * ($j);
-                $count++;
+                ++$count;
             }
 
             if (($sum % 11) < 2) {
-                self::assertEquals($sum % 11, (int)$controlCode);
+                self::assertEquals($sum % 11, (int) $controlCode);
             } else {
-                self::assertEquals(11 - ($sum % 11), (int)$controlCode);
+                self::assertEquals(11 - ($sum % 11), (int) $controlCode);
             }
         }
     }

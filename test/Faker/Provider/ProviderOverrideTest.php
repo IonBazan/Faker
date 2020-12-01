@@ -6,13 +6,7 @@ use Faker;
 use Faker\Test\TestCase;
 
 /**
- * Class ProviderOverrideTest
- *
- * @package Faker\Test\Provider
- *
- * This class tests a large portion of all locale specific providers. It does not test the entire stack, because each
- * locale specific provider (can) has specific implementations. The goal of this test is to test the common denominator
- * and to try to catch possible invalid multi-byte sequences.
+ * Class ProviderOverrideTest.
  */
 final class ProviderOverrideTest extends TestCase
 {
@@ -31,6 +25,7 @@ final class ProviderOverrideTest extends TestCase
 
     /**
      * @dataProvider localeDataProvider
+     *
      * @param string $locale
      */
     public function testAddress($locale = null)
@@ -43,9 +38,9 @@ final class ProviderOverrideTest extends TestCase
         self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->country);
     }
 
-
     /**
      * @dataProvider localeDataProvider
+     *
      * @param string $locale
      */
     public function testCompany($locale = null)
@@ -55,9 +50,9 @@ final class ProviderOverrideTest extends TestCase
         self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->company);
     }
 
-
     /**
      * @dataProvider localeDataProvider
+     *
      * @param string $locale
      */
     public function testDateTime($locale = null)
@@ -68,14 +63,14 @@ final class ProviderOverrideTest extends TestCase
         self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->timezone);
     }
 
-
     /**
      * @dataProvider localeDataProvider
+     *
      * @param string $locale
      */
     public function testInternet($locale = null)
     {
-        if ($locale && $locale !== 'en_US' && !class_exists('Transliterator')) {
+        if ($locale && 'en_US' !== $locale && !class_exists('Transliterator')) {
             self::markTestSkipped('Transliterator class not available (intl extension)');
         }
 
@@ -89,9 +84,9 @@ final class ProviderOverrideTest extends TestCase
         self::assertMatchesRegularExpression(static::TEST_EMAIL_REGEX, $faker->companyEmail);
     }
 
-
     /**
      * @dataProvider localeDataProvider
+     *
      * @param string $locale
      */
     public function testPerson($locale = null)
@@ -104,9 +99,9 @@ final class ProviderOverrideTest extends TestCase
         self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->lastName);
     }
 
-
     /**
      * @dataProvider localeDataProvider
+     *
      * @param string $locale
      */
     public function testPhoneNumber($locale = null)
@@ -116,9 +111,9 @@ final class ProviderOverrideTest extends TestCase
         self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->phoneNumber);
     }
 
-
     /**
      * @dataProvider localeDataProvider
+     *
      * @param string $locale
      */
     public function testUserAgent($locale = null)
@@ -127,7 +122,6 @@ final class ProviderOverrideTest extends TestCase
 
         self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->userAgent);
     }
-
 
     /**
      * @dataProvider localeDataProvider
@@ -142,48 +136,46 @@ final class ProviderOverrideTest extends TestCase
         self::assertMatchesRegularExpression(static::TEST_STRING_REGEX, $faker->uuid);
     }
 
-
     /**
      * @return array
      */
     public function localeDataProvider()
     {
         $locales = $this->getAllLocales();
-        $data = array();
+        $data = [];
 
         foreach ($locales as $locale) {
-            $data[] = array(
-                $locale
-            );
+            $data[] = [
+                $locale,
+            ];
         }
 
         return $data;
     }
 
-
     /**
-     * Returns all locales as array values
+     * Returns all locales as array values.
      *
      * @return array
      */
     private function getAllLocales()
     {
-        static $locales = array();
+        static $locales = [];
 
-        if ( ! empty($locales)) {
+        if (!empty($locales)) {
             return $locales;
         }
 
         // Finding all PHP files in the xx_XX directories
-        $providerDir = __DIR__ .'/../../../src/Faker/Provider';
-        foreach (glob($providerDir .'/*_*/*.php') as $file) {
+        $providerDir = __DIR__.'/../../../src/Faker/Provider';
+        foreach (glob($providerDir.'/*_*/*.php') as $file) {
             $localisation = basename(dirname($file));
 
-            if (isset($locales[ $localisation ])) {
+            if (isset($locales[$localisation])) {
                 continue;
             }
 
-            $locales[ $localisation ] = $localisation;
+            $locales[$localisation] = $localisation;
         }
 
         return $locales;

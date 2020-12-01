@@ -9,13 +9,13 @@ final class PersonTest extends TestCase
 {
     public function testSsn()
     {
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 100; ++$i) {
             $number = $this->faker->ssn;
 
             // should be in the format ###-##-####
             self::assertMatchesRegularExpression('/^[0-9]{3}-[0-9]{2}-[0-9]{4}$/', $number);
 
-            $parts = explode("-", $number);
+            $parts = explode('-', $number);
 
             // first part must be between 001 and 899, excluding 666
             self::assertNotEquals(666, $parts[0]);

@@ -9,7 +9,7 @@ final class PersonTest extends TestCase
 {
     public function testSsnWithDefaultValuesCorrect()
     {
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 100; ++$i) {
             $number = $this->faker->ssn;
 
             // Should have 10 characters: 3 consecutive number, 1 verification number, 6 birth date
@@ -52,7 +52,7 @@ final class PersonTest extends TestCase
         $weights = [3, 7, 9, 0, 5, 8, 4, 2, 1, 6];
         $checkSum = 0;
         foreach ($weights as $i => $weight) {
-            $checkSum += (int)$ssn[$i] * $weight;
+            $checkSum += (int) $ssn[$i] * $weight;
         }
 
         self::assertEquals($ssn[3], $checkSum % 11);

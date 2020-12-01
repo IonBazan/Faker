@@ -7,11 +7,11 @@ use Faker\Test\TestCase;
 final class LicensePlateTest extends TestCase
 {
     /**
-     * Test the validity of license plate
+     * Test the validity of license plate.
      */
     public function testNonSpecialLicensePlates()
     {
-        for ($i = 0; $i < 40; $i++) {
+        for ($i = 0; $i < 40; ++$i) {
             $licensePlate = $this->faker->licensePlate;
             self::assertNotEmpty($licensePlate);
             self::assertIsString($licensePlate);
@@ -20,11 +20,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that special license plates are filtered out
+     * Test that special license plates are filtered out.
      */
     public function testExplicitlyNonSpecialLicensePlates()
     {
-        for ($i = 0; $i < 40; $i++) {
+        for ($i = 0; $i < 40; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 false
             );
@@ -35,11 +35,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that special license plates are filtered out
+     * Test that special license plates are filtered out.
      */
     public function testWithSpecialLicensePlates()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true
             );
@@ -50,11 +50,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that license plate belongs to podkapracikie voivodeship
+     * Test that license plate belongs to podkapracikie voivodeship.
      */
     public function testPodkarpackieLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 false,
                 ['podkarpackie']
@@ -66,11 +66,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that license plate belongs to łodzkie voivodeship or to army
+     * Test that license plate belongs to łodzkie voivodeship or to army.
      */
     public function testLodzkieOrArmyLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true,
                 ['łódzkie', 'army']
@@ -82,11 +82,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that license plate belongs to łodzkie voivodeship but filters out army
+     * Test that license plate belongs to łodzkie voivodeship but filters out army.
      */
     public function testLodzkieButNotArmyLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 false,
                 ['łódzkie', 'army']
@@ -98,11 +98,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that license plate belongs is generated when invorrect voivodeship is given
+     * Test that license plate belongs is generated when invorrect voivodeship is given.
      */
     public function testNoCorrectVoivodeshipLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true,
                 ['fake voivodeship', 'fake voivodeship2']
@@ -114,11 +114,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that correct license plate is generated when no voivodeship is given
+     * Test that correct license plate is generated when no voivodeship is given.
      */
     public function testNoVoivodeshipLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true,
                 []
@@ -130,11 +130,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that correct license plate is generated when no voivodeship or county is given
+     * Test that correct license plate is generated when no voivodeship or county is given.
      */
     public function testNoVoivodeshipNoCountyLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true,
                 [],
@@ -147,11 +147,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that license plate belongs to one of warszawski zachodni or radomski counties or to Border Guard
+     * Test that license plate belongs to one of warszawski zachodni or radomski counties or to Border Guard.
      */
     public function testVoivodeshipCountyLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true,
                 ['mazowieckie', 'services'],
@@ -164,11 +164,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that correct license plate belonging to the correct voivedeship is generated when non-existing county is given
+     * Test that correct license plate belonging to the correct voivedeship is generated when non-existing county is given.
      */
     public function testVoivodeshipFakeCountyLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true,
                 ['mazowieckie', 'services'],
@@ -181,11 +181,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that correct license plate is generated when non-existing voivodeship is given
+     * Test that correct license plate is generated when non-existing voivodeship is given.
      */
     public function testVoivodeshipFakeVoivodeshipLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true,
                 ['fake voivodeship'],
@@ -198,11 +198,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that correct license plate is generated when null is given instead of voivodeships list
+     * Test that correct license plate is generated when null is given instead of voivodeships list.
      */
     public function testVoivodeshipNullVoivodeshipArrayLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true,
                 null,
@@ -215,11 +215,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that correct license plate is generated when null is given in voivodeships array
+     * Test that correct license plate is generated when null is given in voivodeships array.
      */
     public function testVoivodeshipNullVoivodeshipLicensePlate()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true,
                 [null],
@@ -232,11 +232,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that special license plate is not generated when 1st argument is false
+     * Test that special license plate is not generated when 1st argument is false.
      */
     public function testVoivodeship1stArgumentFalse()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 false,
                 ['mazowieckie', 'services'],
@@ -249,11 +249,11 @@ final class LicensePlateTest extends TestCase
     }
 
     /**
-     * Test that special license plate is generated when 1st argument is true
+     * Test that special license plate is generated when 1st argument is true.
      */
     public function testVoivodeship1stArgumentTrue()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $licensePlate = $this->faker->licensePlate(
                 true,
                 ['services'],

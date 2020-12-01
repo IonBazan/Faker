@@ -9,13 +9,13 @@ final class PhoneNumberTest extends TestCase
 {
     public function testPhoneNumber()
     {
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 100; ++$i) {
             $number = $this->faker->phoneNumber;
             $baseNumber = preg_replace('/ *x.*$/', '', $number); // Remove possible extension
             $digits = array_values(array_filter(str_split($baseNumber), 'ctype_digit'));
 
             // Prefix '1' allowed
-            if (count($digits) === 11) {
+            if (11 === count($digits)) {
                 self::assertEquals('1', $digits[0]);
                 $digits = array_slice($digits, 1);
             }
@@ -27,7 +27,7 @@ final class PhoneNumberTest extends TestCase
             self::assertNotEquals($digits[1], $digits[2]);
 
             // Last two digits of exchange code cannot be 1
-            if ($digits[4] === 1) {
+            if (1 === $digits[4]) {
                 self::assertNotEquals($digits[4], $digits[5]);
             }
 
@@ -38,17 +38,17 @@ final class PhoneNumberTest extends TestCase
 
     public function testTollFreeAreaCode()
     {
-        self::assertContains($this->faker->tollFreeAreaCode, array(800, 822, 833, 844, 855, 866, 877, 888, 880, 887, 889));
+        self::assertContains($this->faker->tollFreeAreaCode, [800, 822, 833, 844, 855, 866, 877, 888, 880, 887, 889]);
     }
 
     public function testTollFreePhoneNumber()
     {
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 100; ++$i) {
             $number = $this->faker->tollFreePhoneNumber;
             $digits = array_values(array_filter(str_split($number), 'ctype_digit'));
 
             // Prefix '1' allowed
-            if (count($digits) === 11) {
+            if (11 === count($digits)) {
                 self::assertEquals('1', $digits[0]);
                 $digits = array_slice($digits, 1);
             }
@@ -56,11 +56,11 @@ final class PhoneNumberTest extends TestCase
             // 10 digits
             self::assertCount(10, $digits);
 
-            $areaCode = $digits[0] . $digits[1] . $digits[2];
-            self::assertContains($areaCode, array('800', '822', '833', '844', '855', '866', '877', '888', '880', '887', '889'));
+            $areaCode = $digits[0].$digits[1].$digits[2];
+            self::assertContains($areaCode, ['800', '822', '833', '844', '855', '866', '877', '888', '880', '887', '889']);
 
             // Last two digits of exchange code cannot be 1
-            if ($digits[4] === 1) {
+            if (1 === $digits[4]) {
                 self::assertNotEquals($digits[4], $digits[5]);
             }
 

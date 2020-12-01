@@ -18,7 +18,7 @@ final class PaymentTest extends TestCase
         self::assertTrue(Luhn::isValid($siren));
 
         $key = (int) substr($siren, 2, 2);
-        if ($key === 0) {
+        if (0 === $key) {
             self::assertEquals($key, (12 + 3 * ($siren % 97)) % 97);
         }
     }
@@ -32,7 +32,7 @@ final class PaymentTest extends TestCase
         self::assertTrue(Luhn::isValid($siren));
 
         $key = (int) substr($siren, 2, 2);
-        if ($key === 0) {
+        if (0 === $key) {
             self::assertEquals($key, (12 + 3 * ($siren % 97)) % 97);
         }
     }

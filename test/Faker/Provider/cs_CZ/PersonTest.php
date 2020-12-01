@@ -10,7 +10,7 @@ final class PersonTest extends TestCase
 {
     public function testBirthNumber()
     {
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 1000; ++$i) {
             $birthNumber = $this->faker->birthNumber();
             $birthNumber = str_replace('/', '', $birthNumber);
 
@@ -23,16 +23,20 @@ final class PersonTest extends TestCase
             $year += $year < 54 ? 2000 : 1900;
 
             // adjust special cases for month
-            if ($month > 50) $month -= 50;
-            if ($year >= 2004 && $month > 20) $month -= 20;
+            if ($month > 50) {
+                $month -= 50;
+            }
+            if ($year >= 2004 && $month > 20) {
+                $month -= 20;
+            }
 
             self::assertTrue(checkdate($month, $day, $year), "Birth number $birthNumber: date $year/$month/$day is invalid.");
 
             // check CRC if presented
-            if (strlen($birthNumber) == 10) {
+            if (10 == strlen($birthNumber)) {
                 $crc = (int) substr($birthNumber, -1);
                 $refCrc = (int) substr($birthNumber, 0, -1) % 11;
-                if ($refCrc == 10) {
+                if (10 == $refCrc) {
                     $refCrc = 0;
                 }
                 self::assertEquals($crc, $refCrc, "Birth number $birthNumber: checksum $crc doesn't match expected $refCrc.");

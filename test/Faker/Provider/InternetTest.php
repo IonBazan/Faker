@@ -12,12 +12,12 @@ final class InternetTest extends TestCase
 {
     public function localeDataProvider()
     {
-        $providerPath = realpath(__DIR__ . '/../../../src/Faker/Provider');
-        $localePaths = array_filter(glob($providerPath . '/*', GLOB_ONLYDIR));
+        $providerPath = realpath(__DIR__.'/../../../src/Faker/Provider');
+        $localePaths = array_filter(glob($providerPath.'/*', GLOB_ONLYDIR));
         $locales = [];
         foreach ($localePaths as $path) {
             $parts = explode('/', $path);
-            $locales[] = array($parts[count($parts) - 1]);
+            $locales[] = [$parts[count($parts) - 1]];
         }
 
         return $locales;
@@ -67,7 +67,7 @@ final class InternetTest extends TestCase
 
     public function loadLocalProviders($locale)
     {
-        $providerPath = realpath(__DIR__ . '/../../../src/Faker/Provider');
+        $providerPath = realpath(__DIR__.'/../../../src/Faker/Provider');
         if (file_exists($providerPath.'/'.$locale.'/Internet.php')) {
             $internet = "\\Faker\\Provider\\$locale\\Internet";
             $this->faker->addProvider(new $internet($this->faker));

@@ -15,33 +15,35 @@ final class PaymentTest extends TestCase
     }
 
     /**
-     * Validation taken from https://github.com/amnesty/drupal-nif-nie-cif-validator/
-     * @link https://github.com/amnesty/drupal-nif-nie-cif-validator/blob/master/includes/nif-nie-cif.php
+     * Validation taken from https://github.com/amnesty/drupal-nif-nie-cif-validator/.
+     *
+     * @see https://github.com/amnesty/drupal-nif-nie-cif-validator/blob/master/includes/nif-nie-cif.php
      */
-    function isValidCIF($docNumber)
+    public function isValidCIF($docNumber)
     {
         $fixedDocNumber = strtoupper($docNumber);
 
         return $this->isValidCIFFormat($fixedDocNumber);
     }
 
-    function isValidCIFFormat($docNumber)
+    public function isValidCIFFormat($docNumber)
     {
         return $this->respectsDocPattern($docNumber, '/^[PQSNWR][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z0-9]/')
                 ||
                $this->respectsDocPattern($docNumber, '/^[ABCDEFGHJUV][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/');
     }
 
-    function respectsDocPattern($givenString, $pattern)
+    public function respectsDocPattern($givenString, $pattern)
     {
-        $isValid = FALSE;
+        $isValid = false;
         $fixedString = strtoupper($givenString);
         if (is_int($fixedString[0])) {
-            $fixedString = substr("000000000" . $givenString, -9);
+            $fixedString = substr('000000000'.$givenString, -9);
         }
         if (preg_match($pattern, $fixedString)) {
-            $isValid = TRUE;
+            $isValid = true;
         }
+
         return $isValid;
     }
 
@@ -49,5 +51,4 @@ final class PaymentTest extends TestCase
     {
         yield new Payment($this->faker);
     }
-
 }
