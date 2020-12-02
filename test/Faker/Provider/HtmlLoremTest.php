@@ -7,7 +7,6 @@ use Faker\Test\TestCase;
 
 final class HtmlLoremTest extends TestCase
 {
-
     public function testProvider()
     {
         $node = $this->faker->randomHtml(6, 10);

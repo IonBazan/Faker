@@ -2,7 +2,6 @@
 
 namespace Faker\Test\Provider\en_GB;
 
-use Faker\Generator;
 use Faker\Provider\en_GB\Person;
 use Faker\Test\TestCase;
 

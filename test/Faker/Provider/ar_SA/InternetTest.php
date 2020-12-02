@@ -2,9 +2,9 @@
 
 namespace Faker\Test\Provider\ar_SA;
 
-use Faker\Provider\ar_SA\Person;
-use Faker\Provider\ar_SA\Internet;
 use Faker\Provider\ar_SA\Company;
+use Faker\Provider\ar_SA\Internet;
+use Faker\Provider\ar_SA\Person;
 use Faker\Test\TestCase;
 
 final class InternetTest extends TestCase

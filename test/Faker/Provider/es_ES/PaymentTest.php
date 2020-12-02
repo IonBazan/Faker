@@ -25,22 +25,22 @@ final class PaymentTest extends TestCase
         return $this->isValidCIFFormat($fixedDocNumber);
     }
 
-    function isValidCIFFormat($docNumber)
+    public function isValidCIFFormat($docNumber)
     {
         return $this->respectsDocPattern($docNumber, '/^[PQSNWR][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z0-9]/')
                 ||
                $this->respectsDocPattern($docNumber, '/^[ABCDEFGHJUV][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/');
     }
 
-    function respectsDocPattern($givenString, $pattern)
+    public function respectsDocPattern($givenString, $pattern)
     {
-        $isValid = FALSE;
+        $isValid = false;
         $fixedString = strtoupper($givenString);
         if (is_int($fixedString[0])) {
             $fixedString = substr("000000000" . $givenString, -9);
         }
         if (preg_match($pattern, $fixedString)) {
-            $isValid = TRUE;
+            $isValid = true;
         }
         return $isValid;
     }

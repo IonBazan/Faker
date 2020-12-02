@@ -23,8 +23,12 @@ final class PersonTest extends TestCase
             $year += $year < 54 ? 2000 : 1900;
 
             // adjust special cases for month
-            if ($month > 50) $month -= 50;
-            if ($year >= 2004 && $month > 20) $month -= 20;
+            if ($month > 50) {
+                $month -= 50;
+            }
+            if ($year >= 2004 && $month > 20) {
+                $month -= 20;
+            }
 
             self::assertTrue(checkdate($month, $day, $year), "Birth number $birthNumber: date $year/$month/$day is invalid.");
 

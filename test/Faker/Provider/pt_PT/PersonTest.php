@@ -14,12 +14,11 @@ final class PersonTest extends TestCase
     }
 
     /**
-     *
      * @link http://pt.wikipedia.org/wiki/N%C3%BAmero_de_identifica%C3%A7%C3%A3o_fiscal
      *
      * @param string $tin
      *
-     * @return boolean
+     * @return bool
      */
     private static function isValidTin($tin)
     {
@@ -36,7 +35,7 @@ final class PersonTest extends TestCase
             $cd = 11 - $cd;
         }
 
-        return $cd === (int)$n[8];
+        return $cd === (int) $n[8];
     }
 
     protected function getProviders(): iterable

@@ -66,8 +66,8 @@ final class PaymentTest extends TestCase
     public function testCreditCardExpirationDateReturnsValidDateByDefault()
     {
         $expirationDate = $this->faker->creditCardExpirationDate;
-        self::assertTrue((int)$expirationDate->format('U') > strtotime('now'));
-        self::assertTrue((int)$expirationDate->format('U') < strtotime('+36 months'));
+        self::assertTrue((int) $expirationDate->format('U') > strtotime('now'));
+        self::assertTrue((int) $expirationDate->format('U') < strtotime('+36 months'));
     }
 
     public function testRandomCard()

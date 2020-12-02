@@ -31,9 +31,9 @@ final class PersonTest extends TestCase
             }
 
             if (($sum % 11) < 2) {
-                self::assertEquals($sum % 11, (int)$controlCode);
+                self::assertEquals($sum % 11, (int) $controlCode);
             } else {
-                self::assertEquals(11 - ($sum % 11), (int)$controlCode);
+                self::assertEquals(11 - ($sum % 11), (int) $controlCode);
             }
         }
     }

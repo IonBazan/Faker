@@ -127,29 +127,29 @@ final class BaseTest extends TestCase
 
     public function testRandomElementReturnsNullWhenArrayEmpty()
     {
-        self::assertNull(BaseProvider::randomElement(array()));
+        self::assertNull(BaseProvider::randomElement([]));
     }
 
     public function testRandomElementReturnsNullWhenCollectionEmpty()
     {
-        self::assertNull(BaseProvider::randomElement(new Collection(array())));
+        self::assertNull(BaseProvider::randomElement(new Collection([])));
     }
 
     public function testRandomElementReturnsElementFromArray()
     {
-        $elements = array('23', 'e', 32, '#');
+        $elements = ['23', 'e', 32, '#'];
         self::assertContains(BaseProvider::randomElement($elements), $elements);
     }
 
     public function testRandomElementReturnsElementFromAssociativeArray()
     {
-        $elements = array('tata' => '23', 'toto' => 'e', 'tutu' => 32, 'titi' => '#');
+        $elements = ['tata' => '23', 'toto' => 'e', 'tutu' => 32, 'titi' => '#'];
         self::assertContains(BaseProvider::randomElement($elements), $elements);
     }
 
     public function testRandomElementReturnsElementFromCollection()
     {
-        $collection = new Collection(array('one', 'two', 'three'));
+        $collection = new Collection(['one', 'two', 'three']);
         self::assertContains(BaseProvider::randomElement($collection), $collection);
     }
 
@@ -160,7 +160,7 @@ final class BaseTest extends TestCase
 
     public function testShuffleReturnsArrayWhenPassedAnArrayArgument()
     {
-        self::assertIsArray(BaseProvider::shuffle(array(1, 2, 3)));
+        self::assertIsArray(BaseProvider::shuffle([1, 2, 3]));
     }
 
     public function testShuffleThrowsExceptionWhenPassedAnInvalidArgument()
@@ -171,18 +171,18 @@ final class BaseTest extends TestCase
 
     public function testShuffleArraySupportsEmptyArrays()
     {
-        self::assertEquals(array(), BaseProvider::shuffleArray(array()));
+        self::assertEquals([], BaseProvider::shuffleArray([]));
     }
 
     public function testShuffleArrayReturnsAnArrayOfTheSameSize()
     {
-        $array = array(1, 2, 3, 4, 5);
+        $array = [1, 2, 3, 4, 5];
         self::assertSameSize($array, BaseProvider::shuffleArray($array));
     }
 
     public function testShuffleArrayReturnsAnArrayWithSameElements()
     {
-        $array = array(2, 4, 6, 8, 10);
+        $array = [2, 4, 6, 8, 10];
         $shuffleArray = BaseProvider::shuffleArray($array);
         self::assertContains(2, $shuffleArray);
         self::assertContains(4, $shuffleArray);
@@ -193,16 +193,16 @@ final class BaseTest extends TestCase
 
     public function testShuffleArrayReturnsADifferentArrayThanTheOriginal()
     {
-        $arr = array(1, 2, 3, 4, 5);
+        $arr = [1, 2, 3, 4, 5];
         $shuffledArray = BaseProvider::shuffleArray($arr);
         self::assertNotEquals($arr, $shuffledArray);
     }
 
     public function testShuffleArrayLeavesTheOriginalArrayUntouched()
     {
-        $arr = array(1, 2, 3, 4, 5);
+        $arr = [1, 2, 3, 4, 5];
         BaseProvider::shuffleArray($arr);
-        self::assertEquals($arr, array(1, 2, 3, 4, 5));
+        self::assertEquals($arr, [1, 2, 3, 4, 5]);
     }
 
     public function testShuffleStringSupportsEmptyStrings()
@@ -305,12 +305,12 @@ final class BaseTest extends TestCase
 
     public function regexifyBasicDataProvider()
     {
-        return array(
-            array('azeQSDF1234', 'azeQSDF1234', 'does not change non regex chars'),
-            array('foo(bar){1}', 'foobar', 'replaces regex characters'),
-            array('', '', 'supports empty string'),
-            array('/^foo(bar){1}$/', 'foobar', 'ignores regex delimiters')
-        );
+        return [
+            ['azeQSDF1234', 'azeQSDF1234', 'does not change non regex chars'],
+            ['foo(bar){1}', 'foobar', 'replaces regex characters'],
+            ['', '', 'supports empty string'],
+            ['/^foo(bar){1}$/', 'foobar', 'ignores regex delimiters']
+        ];
     }
 
     /**
@@ -323,22 +323,22 @@ final class BaseTest extends TestCase
 
     public function regexifyDataProvider()
     {
-        return array(
-            array('\d', 'numbers'),
-            array('\w', 'letters'),
-            array('(a|b)', 'alternation'),
-            array('[aeiou]', 'basic character class'),
-            array('[a-z]', 'character class range'),
-            array('[a-z1-9]', 'multiple character class range'),
-            array('a*b+c?', 'single character quantifiers'),
-            array('a{2}', 'brackets quantifiers'),
-            array('a{2,3}', 'min-max brackets quantifiers'),
-            array('[aeiou]{2,3}', 'brackets quantifiers on basic character class'),
-            array('[a-z]{2,3}', 'brackets quantifiers on character class range'),
-            array('(a|b){2,3}', 'brackets quantifiers on alternation'),
-            array('\.\*\?\+', 'escaped characters'),
-            array('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}', 'complex regex')
-        );
+        return [
+            ['\d', 'numbers'],
+            ['\w', 'letters'],
+            ['(a|b)', 'alternation'],
+            ['[aeiou]', 'basic character class'],
+            ['[a-z]', 'character class range'],
+            ['[a-z1-9]', 'multiple character class range'],
+            ['a*b+c?', 'single character quantifiers'],
+            ['a{2}', 'brackets quantifiers'],
+            ['a{2,3}', 'min-max brackets quantifiers'],
+            ['[aeiou]{2,3}', 'brackets quantifiers on basic character class'],
+            ['[a-z]{2,3}', 'brackets quantifiers on character class range'],
+            ['(a|b){2,3}', 'brackets quantifiers on alternation'],
+            ['\.\*\?\+', 'escaped characters'],
+            ['[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}', 'complex regex']
+        ];
     }
 
     /**
@@ -391,7 +391,7 @@ final class BaseTest extends TestCase
         }
         self::assertContains(null, $values);
 
-        $values = array();
+        $values = [];
         for ($i=0; $i < 10; $i++) {
             $values[]= $faker->optional(50)->randomDigit;
         }
@@ -407,8 +407,8 @@ final class BaseTest extends TestCase
         $faker->addProvider(new \Faker\Provider\Base($faker));
         $faker->addProvider(new \Faker\Provider\Miscellaneous($faker));
 
-        $valuesOld = array();
-        $valuesNew = array();
+        $valuesOld = [];
+        $valuesNew = [];
 
         for ($i = 0; $i < 10000; ++$i) {
             $valuesOld[] = $faker->optional(0.5)->boolean(100);
@@ -530,23 +530,23 @@ final class BaseTest extends TestCase
     {
         $this->expectException(\LengthException::class);
         $this->expectExceptionMessage('Cannot get 2 elements, only 1 in array');
-        BaseProvider::randomElements(array('foo'), 2);
+        BaseProvider::randomElements(['foo'], 2);
     }
 
     public function testRandomElements()
     {
         self::assertCount(1, BaseProvider::randomElements(), 'Should work without any input');
 
-        $empty = BaseProvider::randomElements(array(), 0);
+        $empty = BaseProvider::randomElements([], 0);
         self::assertIsArray($empty);
         self::assertCount(0, $empty);
 
-        $shuffled = BaseProvider::randomElements(array('foo', 'bar', 'baz'), 3);
+        $shuffled = BaseProvider::randomElements(['foo', 'bar', 'baz'], 3);
         self::assertContains('foo', $shuffled);
         self::assertContains('bar', $shuffled);
         self::assertContains('baz', $shuffled);
 
-        $allowDuplicates = BaseProvider::randomElements(array('foo', 'bar'), 3, true);
+        $allowDuplicates = BaseProvider::randomElements(['foo', 'bar'], 3, true);
         self::assertCount(3, $allowDuplicates);
         self::assertContainsOnly('string', $allowDuplicates);
     }

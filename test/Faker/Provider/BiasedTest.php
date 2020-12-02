@@ -7,8 +7,8 @@ use Faker\Test\TestCase;
 
 final class BiasedTest extends TestCase
 {
-    const MAX = 10;
-    const NUMBERS = 25000;
+    public const MAX = 10;
+    public const NUMBERS = 25000;
     protected $results = [];
 
     protected function setUp(): void
@@ -19,14 +19,14 @@ final class BiasedTest extends TestCase
 
     public function performFake($function)
     {
-        for($i = 0; $i < self::NUMBERS; $i++) {
+        for ($i = 0; $i < self::NUMBERS; $i++) {
             $this->results[$this->faker->biasedNumberBetween(1, self::MAX, $function)]++;
         }
     }
 
     public function testUnbiased()
     {
-        $this->performFake(array('\Faker\Provider\Biased', 'unbiased'));
+        $this->performFake(['\Faker\Provider\Biased', 'unbiased']);
 
         // assert that all numbers are near the expected unbiased value
         foreach ($this->results as $number => $amount) {
@@ -41,13 +41,13 @@ final class BiasedTest extends TestCase
 
     public function testLinearHigh()
     {
-        $this->performFake(array('\Faker\Provider\Biased', 'linearHigh'));
+        $this->performFake(['\Faker\Provider\Biased', 'linearHigh']);
 
         foreach ($this->results as $number => $amount) {
             // integral
-            $assumed = 0.5 * pow(1 / self::MAX * $number, 2) - 0.5 * pow(1 / self::MAX * ($number - 1), 2);
+            $assumed = 0.5 * (1 / self::MAX * $number) ** 2 - 0.5 * (1 / self::MAX * ($number - 1)) ** 2;
             // calculate the fraction of the whole area
-            $assumed /= pow(1, 2) * .5;
+            $assumed /= 1 ** 2 * .5;
             $this->assertGreaterThan(self::NUMBERS * $assumed * .9, $amount, "Value was more than 10 percent under the expected value");
             $this->assertLessThan(self::NUMBERS * $assumed * 1.1, $amount, "Value was more than 10 percent over the expected value");
         }
@@ -55,15 +55,15 @@ final class BiasedTest extends TestCase
 
     public function testLinearLow()
     {
-        $this->performFake(array('\Faker\Provider\Biased', 'linearLow'));
+        $this->performFake(['\Faker\Provider\Biased', 'linearLow']);
 
         foreach ($this->results as $number => $amount) {
             // integral
-            $assumed = -0.5 * pow(1 / self::MAX * $number, 2) - -0.5 * pow(1 / self::MAX * ($number - 1), 2);
+            $assumed = -0.5 * (1 / self::MAX * $number) ** 2 - -0.5 * (1 / self::MAX * ($number - 1)) ** 2;
             // shift the graph up
             $assumed += 1 / self::MAX;
             // calculate the fraction of the whole area
-            $assumed /= pow(1, 2) * .5;
+            $assumed /= 1 ** 2 * .5;
             $this->assertGreaterThan(self::NUMBERS * $assumed * .9, $amount, "Value was more than 10 percent under the expected value");
             $this->assertLessThan(self::NUMBERS * $assumed * 1.1, $amount, "Value was more than 10 percent over the expected value");
         }
