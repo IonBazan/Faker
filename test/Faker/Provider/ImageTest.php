@@ -82,6 +82,9 @@ final class ImageTest extends TestCase
         self::assertMatchesRegularExpression('#\w*#', $splitUrl[1]);
     }
 
+    /**
+     * @group external
+     */
     public function testDownloadWithDefaults()
     {
         $curlPing = curl_init(Image::BASE_URL);
@@ -100,7 +103,7 @@ final class ImageTest extends TestCase
         $file = Image::image(sys_get_temp_dir());
         self::assertFileExists($file);
         if (function_exists('getimagesize')) {
-            list($width, $height, $type, $attr) = getimagesize($file);
+            [$width, $height, $type, $attr] = getimagesize($file);
             self::assertEquals(640, $width);
             self::assertEquals(480, $height);
             self::assertEquals(constant('IMAGETYPE_PNG'), $type);
