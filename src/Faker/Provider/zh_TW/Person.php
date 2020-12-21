@@ -142,9 +142,11 @@ class Person extends \Faker\Provider\Person
     public static function randomName($pool, $n)
     {
         $name = '';
+
         for ($i = 0; $i < $n; ++$i) {
             $name .= static::randomElement($pool);
         }
+
         return $name;
     }
 
@@ -169,7 +171,7 @@ class Person extends \Faker\Provider\Person
      * @see https://en.wikipedia.org/wiki/National_Identification_Card_(Republic_of_China)
      *
      * @return string Length 10 alphanumeric characters, begins with 1 latin character (birthplace),
-     * 1 number (gender) and then 8 numbers (the last one is check digit).
+     *                1 number (gender) and then 8 numbers (the last one is check digit).
      */
     public function personalIdentityNumber($gender = null)
     {

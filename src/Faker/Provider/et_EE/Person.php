@@ -2,9 +2,6 @@
 
 namespace Faker\Provider\et_EE;
 
-/**
- * @author David Gegelija <code@imdavid.xyz>
- */
 class Person extends \Faker\Provider\Person
 {
     /**

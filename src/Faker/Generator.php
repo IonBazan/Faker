@@ -73,6 +73,7 @@ namespace Faker;
  * @method string text($maxNbChars = 200)
  *
  * @method string realText($maxNbChars = 200, $indexSize = 2)
+ * @method string realTextBetween($minNbChars = 150, $maxNbChars = 200, $indexSize = 2)
  *
  * @property string $email
  * @property string $safeEmail
@@ -238,6 +239,7 @@ class Generator
         if (isset($this->formatters[$formatter])) {
             return $this->formatters[$formatter];
         }
+
         foreach ($this->providers as $provider) {
             if (method_exists($provider, $formatter)) {
                 $this->formatters[$formatter] = [$provider, $formatter];
@@ -245,6 +247,7 @@ class Generator
                 return $this->formatters[$formatter];
             }
         }
+
         throw new \InvalidArgumentException(sprintf('Unknown formatter "%s"', $formatter));
     }
 
@@ -276,7 +279,7 @@ class Generator
 
     /**
      * @param string $method
-     * @param array $attributes
+     * @param array  $attributes
      *
      * @return mixed
      */

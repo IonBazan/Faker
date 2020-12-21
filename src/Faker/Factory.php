@@ -11,12 +11,13 @@ class Factory
     /**
      * Create a new generator
      *
-     * @param string $locale
+     * @param  string    $locale
      * @return Generator
      */
     public static function create($locale = self::DEFAULT_LOCALE)
     {
         $generator = new Generator();
+
         foreach (static::$defaultProviders as $provider) {
             $providerClassName = self::getProviderClassname($provider, $locale);
             $generator->addProvider(new $providerClassName($generator));
@@ -26,8 +27,8 @@ class Factory
     }
 
     /**
-     * @param string $provider
-     * @param string $locale
+     * @param  string $provider
+     * @param  string $locale
      * @return string
      */
     protected static function getProviderClassname($provider, $locale = '')
@@ -43,12 +44,13 @@ class Factory
         if ($providerClass = self::findProviderClassname($provider)) {
             return $providerClass;
         }
+
         throw new \InvalidArgumentException(sprintf('Unable to find provider "%s" with locale "%s"', $provider, $locale));
     }
 
     /**
-     * @param string $provider
-     * @param string $locale
+     * @param  string      $provider
+     * @param  string      $locale
      * @return string|null
      */
     protected static function findProviderClassname($provider, $locale = '')

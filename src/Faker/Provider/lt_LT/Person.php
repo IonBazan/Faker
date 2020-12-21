@@ -311,10 +311,10 @@ class Person extends \Faker\Provider\Person
      * National Personal Identity number (asmens kodas)
      * @link https://en.wikipedia.org/wiki/National_identification_number#Lithuania
      * @link https://lt.wikipedia.org/wiki/Asmens_kodas
-     * @param string $gender [male|female]
-     * @param \DateTime $birthdate
-     * @param string $randomNumber three integers
-     * @return string on format XXXXXXXXXXX
+     * @param  string    $gender       [male|female]
+     * @param  \DateTime $birthdate
+     * @param  string    $randomNumber three integers
+     * @return string    on format XXXXXXXXXXX
      */
     public function personalIdentityNumber($gender = 'male', \DateTime $birthdate = null, $randomNumber = '')
     {
@@ -334,6 +334,7 @@ class Person extends \Faker\Provider\Person
 
         if ($liekana !== 10) {
             $lastNumber = $liekana;
+
             return $firstNumber . $datePart . $randomDigits . $lastNumber;
         }
 
@@ -341,6 +342,7 @@ class Person extends \Faker\Provider\Person
         $liekana = $sum % 11;
 
         $lastNumber = ($liekana !== 10) ? $liekana : 0;
+
         return $firstNumber . $datePart . $randomDigits . $lastNumber;
     }
 
@@ -348,8 +350,8 @@ class Person extends \Faker\Provider\Person
      * Calculate the sum of personal code
      * @link https://en.wikipedia.org/wiki/National_identification_number#Lithuania
      * @link https://lt.wikipedia.org/wiki/Asmens_kodas
-     * @param string $numbers
-     * @param int $time [1|2]
+     * @param  string $numbers
+     * @param  int    $time    [1|2]
      * @return int
      */
     private static function calculateSum($numbers, $time = 1)
@@ -361,6 +363,7 @@ class Person extends \Faker\Provider\Person
         }
 
         $sum = 0;
+
         for ($i=1; $i <= 10; $i++) {
             $sum += ((int) $numbers[$i - 1]) * $multipliers[$i - 1];
         }

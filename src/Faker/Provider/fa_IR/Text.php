@@ -8,10 +8,10 @@ class Text extends \Faker\Provider\Text
      * generates text string in arabic
      *
      * @example 'از تاریخ‌الشعرا را بکوبند روی نبش دیوار کوچه‌شان. تابلوی مدرسه.'
-     * @param  int                   $maxNbChars
-     * @param  int                   $indexSize
-     * @return string
+     * @param  int                       $maxNbChars
+     * @param  int                       $indexSize
      * @throws \InvalidArgumentException
+     * @return string
      */
     public function realText($maxNbChars = 200, $indexSize = 2)
     {
@@ -32,6 +32,7 @@ class Text extends \Faker\Provider\Text
         $resultLength = 0;
         // take a random starting point
         $next = static::randomKey($words);
+
         while ($resultLength < $maxNbChars && isset($words[$next])) {
             // fetch a random word to append
             $word = static::randomElement($words[$next]);

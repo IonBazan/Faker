@@ -7,11 +7,11 @@ on:
       - "main"
       - "[0-9].*"
 
-name: Continuous Integration
+name: Tests
 
 jobs:
-  tests:
-    name: CI on ${{ matrix.operating-system }} with PHP ${{ matrix.php-version }} ${{ matrix.phpunit-flags }}
+  phpunit:
+    name: PHPUnit on ${{ matrix.operating-system }} with PHP ${{ matrix.php-version }} ${{ matrix.phpunit-flags }}
 
     strategy:
       matrix:
@@ -41,6 +41,7 @@ jobs:
       - name: Install PHP with extensions
         uses: shivammathur/setup-php@v2
         with:
+          coverage: none
           extensions: intl
           php-version: ${{ matrix.php-version }}
 
@@ -61,7 +62,8 @@ jobs:
       - name: Download dependencies
         run: |
           composer update --no-interaction --no-progress --optimize-autoloader
+          ./vendor/bin/simple-phpunit install
 
       - name: Run tests with PHPUnit
         run: |
-          vendor/bin/phpunit ${{ matrix.phpunit-flags }}
+          ./vendor/bin/simple-phpunit ${{ matrix.phpunit-flags }}

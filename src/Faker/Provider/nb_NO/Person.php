@@ -283,9 +283,9 @@ class Person extends \Faker\Provider\Person
     /**
      * National Personal Identity number (personnummer)
      * @link https://no.wikipedia.org/wiki/Personnummer
-     * @param \DateTime $birthdate
-     * @param string $gender Person::GENDER_MALE || Person::GENDER_FEMALE
-     * @return string on format DDMMYY#####
+     * @param  \DateTime $birthdate
+     * @param  string    $gender    Person::GENDER_MALE || Person::GENDER_FEMALE
+     * @return string    on format DDMMYY#####
      */
     public function personalIdentityNumber(\DateTime $birthdate = null, $gender = null)
     {
@@ -303,10 +303,14 @@ class Person extends \Faker\Provider\Person
         switch ($gender) {
             case static::GENDER_MALE:
                 $genderDigit = static::randomElement([1, 3, 5, 7, 9]);
+
                 break;
+
             case static::GENDER_FEMALE:
                 $genderDigit = static::randomElement([0, 2, 4, 6, 8]);
+
                 break;
+
             default:
                 $genderDigit = (string) static::numerify('#');
         }

@@ -15,7 +15,7 @@ use InvalidArgumentException;
 class Luhn
 {
     /**
-     * @param string $number
+     * @param  string $number
      * @return int
      */
     private static function checksum($number)
@@ -23,9 +23,11 @@ class Luhn
         $number = (string) $number;
         $length = strlen($number);
         $sum = 0;
+
         for ($i = $length - 1; $i >= 0; $i -= 2) {
             $sum += $number[$i];
         }
+
         for ($i = $length - 2; $i >= 0; $i -= 2) {
             $sum += array_sum(str_split($number[$i] * 2));
         }
@@ -34,7 +36,7 @@ class Luhn
     }
 
     /**
-     * @param string $partialNumber
+     * @param  string $partialNumber
      * @return string
      */
     public static function computeCheckDigit($partialNumber)
@@ -50,7 +52,7 @@ class Luhn
     /**
      * Checks whether a number (partial number + check digit) is Luhn compliant
      *
-     * @param string $number
+     * @param  string $number
      * @return bool
      */
     public static function isValid($number)
@@ -70,6 +72,7 @@ class Luhn
         if (!preg_match('/^\d+$/', $partialValue)) {
             throw new InvalidArgumentException('Argument should be an integer.');
         }
+
         return $partialValue . Luhn::computeCheckDigit($partialValue);
     }
 }

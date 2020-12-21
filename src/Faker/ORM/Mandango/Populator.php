@@ -17,7 +17,7 @@ class Populator
 
     /**
      * @param \Faker\Generator $generator
-     * @param Mandango $mandango
+     * @param Mandango         $mandango
      */
     public function __construct(\Faker\Generator $generator, Mandango $mandango)
     {
@@ -53,6 +53,7 @@ class Populator
     public function execute()
     {
         $insertedEntities = [];
+
         foreach ($this->quantities as $class => $number) {
             for ($i=0; $i < $number; $i++) {
                 $insertedEntities[$class][]= $this->entities[$class]->execute($this->mandango, $insertedEntities);

@@ -72,10 +72,8 @@ final class PersonTest extends TestCase
             [Person::GENDER_FEMALE, '1981-06-16', 'B2', false, '981061642'],
         ];
     }
-    /**
-     *
-     */
-    public function test_allRandom_returnsValidCnp()
+
+    public function testAllRandomReturnsValidCnp()
     {
         $cnp = $this->faker->cnp;
         self::assertTrue(
@@ -84,10 +82,7 @@ final class PersonTest extends TestCase
         );
     }
 
-    /**
-     *
-     */
-    public function test_validGender_returnsValidCnp()
+    public function testValidGenderReturnsValidCnp()
     {
         $cnp = $this->faker->cnp(Person::GENDER_MALE);
         self::assertTrue(
@@ -107,7 +102,7 @@ final class PersonTest extends TestCase
      *
      * @dataProvider invalidGenderProvider
      */
-    public function test_invalidGender_throwsException($value)
+    public function testInvalidGenderThrowsException($value)
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->faker->cnp($value);
@@ -118,7 +113,7 @@ final class PersonTest extends TestCase
      *
      * @dataProvider validYearProvider
      */
-    public function test_validYear_returnsValidCnp($value)
+    public function testValidYearReturnsValidCnp($value)
     {
         $cnp = $this->faker->cnp(null, $value);
         self::assertTrue(
@@ -132,17 +127,17 @@ final class PersonTest extends TestCase
      *
      * @dataProvider invalidYearProvider
      */
-    public function test_invalidYear_throwsException($value)
+    public function testInvalidYearThrowsException($value)
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->faker->cnp(null, $value);
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @dataProvider validCountyCodeProvider
      */
-    public function test_validCountyCode_returnsValidCnp($value)
+    public function testValidCountyCodeReturnsValidCnp($value)
     {
         $cnp = $this->faker->cnp(null, null, $value);
         self::assertTrue(
@@ -152,19 +147,16 @@ final class PersonTest extends TestCase
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @dataProvider invalidCountyCodeProvider
      */
-    public function test_invalidCountyCode_throwsException($value)
+    public function testInvalidCountyCodeThrowsException($value)
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->faker->cnp(null, null, $value);
     }
 
-    /**
-     *
-     */
-    public function test_nonResident_returnsValidCnp()
+    public function testNonResidentReturnsValidCnp()
     {
         $cnp = $this->faker->cnp(null, null, null, false);
         self::assertTrue(
@@ -179,15 +171,15 @@ final class PersonTest extends TestCase
     }
 
     /**
-     * @param $gender
-     * @param $dateOfBirth
-     * @param $county
-     * @param $isResident
-     * @param $expectedCnpStart
+     * @param string $gender
+     * @param string $dateOfBirth
+     * @param string $county
+     * @param bool   $isResident
+     * @param string $expectedCnpStart
      *
      * @dataProvider validInputDataProvider
      */
-    public function test_validInputData_returnsValidCnp($gender, $dateOfBirth, $county, $isResident, $expectedCnpStart)
+    public function testValidInputDataReturnsValidCnp($gender, $dateOfBirth, $county, $isResident, $expectedCnpStart)
     {
         $cnp = $this->faker->cnp($gender, $dateOfBirth, $county, $isResident);
         self::assertStringStartsWith(
@@ -196,7 +188,6 @@ final class PersonTest extends TestCase
             sprintf("Invalid CNP '%' generated for non valid data", $cnp)
         );
     }
-
 
     protected function isValidFemaleCnp($value)
     {
@@ -214,6 +205,7 @@ final class PersonTest extends TestCase
             $checkNumber = 279146358279;
 
             $checksum = 0;
+
             foreach (range(0, 11) as $digit) {
                 $checksum += (int) substr($cnp, $digit, 1) * (int) substr($checkNumber, $digit, 1);
             }
@@ -231,6 +223,7 @@ final class PersonTest extends TestCase
     protected function getProviders(): iterable
     {
         yield new Person($this->faker);
+
         yield new DateTime($this->faker);
     }
 }

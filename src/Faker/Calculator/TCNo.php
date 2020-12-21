@@ -12,7 +12,7 @@ class TCNo
      *
      * https://en.wikipedia.org/wiki/Turkish_Identification_Number
      *
-     * @param string $identityPrefix
+     * @param  string $identityPrefix
      * @return string Checksum (two digit)
      */
     public static function checksum($identityPrefix)
@@ -25,6 +25,7 @@ class TCNo
         $evenSum = 0;
 
         $identityArray = array_map('intval', str_split($identityPrefix)); // Creates array from int
+
         foreach ($identityArray as $index => $digit) {
             if ($index % 2 == 0) {
                 $evenSum += $digit;
@@ -42,7 +43,7 @@ class TCNo
     /**
      * Checks whether a TCNo has a valid checksum
      *
-     * @param string $tcNo
+     * @param  string $tcNo
      * @return bool
      */
     public static function isValid($tcNo)

@@ -89,9 +89,9 @@ class Person extends \Faker\Provider\Person
     /**
      * National Personal Identity Number (Henkilötunnus)
      * @link http://www.finlex.fi/fi/laki/ajantasa/2010/20100128
-     * @param \DateTime $birthdate
-     * @param string $gender Person::GENDER_MALE || Person::GENDER_FEMALE
-     * @return string on format DDMMYYCZZZQ, where DDMMYY is the date of birth, C the century sign, ZZZ the individual number and Q the control character (checksum)
+     * @param  \DateTime $birthdate
+     * @param  string    $gender    Person::GENDER_MALE || Person::GENDER_FEMALE
+     * @return string    on format DDMMYYCZZZQ, where DDMMYY is the date of birth, C the century sign, ZZZ the individual number and Q the control character (checksum)
      */
     public function personalIdentityNumber(\DateTime $birthdate = null, $gender = null)
     {
@@ -105,13 +105,19 @@ class Person extends \Faker\Provider\Person
         switch ((int) ($birthdate->format('Y') / 100)) {
             case 18:
                 $centurySign = '+';
+
                 break;
+
             case 19:
                 $centurySign = '-';
+
                 break;
+
             case 20:
                 $centurySign = 'A';
+
                 break;
+
             default:
                 throw new \InvalidArgumentException('Year must be between 1800 and 2099 inclusive.');
         }

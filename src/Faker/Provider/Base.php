@@ -50,7 +50,7 @@ class Base
     /**
      * Generates a random digit, which cannot be $except
      *
-     * @param int $except
+     * @param  int $except
      * @return int
      */
     public static function randomDigitNot($except)
@@ -59,6 +59,7 @@ class Base
         if ($result >= $except) {
             $result++;
         }
+
         return $result;
     }
 
@@ -67,7 +68,7 @@ class Base
      *
      * The maximum value returned is mt_getrandmax()
      *
-     * @param int $nbDigits Defaults to a random number between 1 and 9
+     * @param int  $nbDigits Defaults to a random number between 1 and 9
      * @param bool $strict   Whether the returned number should have exactly $nbDigits
      * @example 79907610
      *
@@ -137,6 +138,7 @@ class Base
     {
         $min = $int1 < $int2 ? $int1 : $int2;
         $max = $int1 < $int2 ? $int2 : $int1;
+
         return mt_rand($min, $max);
     }
 
@@ -174,8 +176,8 @@ class Base
      * Returns randomly ordered subsequence of $count elements from a provided array
      *
      * @param  array            $array           Array to take elements from. Defaults to a-c
-     * @param  int          $count           Number of elements to take.
-     * @param  bool          $allowDuplicates Allow elements to be picked several times. Defaults to false
+     * @param  int              $count           Number of elements to take.
+     * @param  bool             $allowDuplicates Allow elements to be picked several times. Defaults to false
      * @throws \LengthException When requesting more elements than provided
      *
      * @return array New array with $count elements from $array
@@ -239,7 +241,7 @@ class Base
     /**
      * Returns a random key from a passed associative array
      *
-     * @param  array $array
+     * @param  array           $array
      * @return int|string|null
      */
     public static function randomKey($array = [])
@@ -248,6 +250,7 @@ class Base
             return null;
         }
         $keys = array_keys($array);
+
         return $keys[mt_rand(0, count($keys) - 1)];
     }
 
@@ -262,7 +265,7 @@ class Base
      * @see shuffleArray()
      * @see shuffleString()
      *
-     * @param array|string $arg The set to shuffle
+     * @param  array|string $arg The set to shuffle
      * @return array|string The shuffled set
      */
     public static function shuffle($arg = '')
@@ -273,6 +276,7 @@ class Base
         if (is_string($arg)) {
             return static::shuffleString($arg);
         }
+
         throw new \InvalidArgumentException('shuffle() only supports strings or arrays');
     }
 
@@ -288,7 +292,7 @@ class Base
      *
      * @example $faker->shuffleArray([1, 2, 3]); // [2, 1, 3]
      *
-     * @param array $array The set to shuffle
+     * @param  array $array The set to shuffle
      * @return array The shuffled set
      */
     public static function shuffleArray($array = [])
@@ -296,6 +300,7 @@ class Base
         $shuffledArray = [];
         $i = 0;
         reset($array);
+
         foreach ($array as $key => $value) {
             if ($i == 0) {
                 $j = 0;
@@ -310,6 +315,7 @@ class Base
             }
             $i++;
         }
+
         return $shuffledArray;
     }
 
@@ -326,8 +332,8 @@ class Base
      *
      * @example $faker->shuffleString('hello, world'); // 'rlo,h eold!lw'
      *
-     * @param string $string The set to shuffle
-     * @param string $encoding The string encoding (defaults to UTF-8)
+     * @param  string $string   The set to shuffle
+     * @param  string $encoding The string encoding (defaults to UTF-8)
      * @return string The shuffled set
      */
     public static function shuffleString($string = '', $encoding = 'UTF-8')
@@ -336,12 +342,14 @@ class Base
             // UTF8-safe str_split()
             $array = [];
             $strlen = mb_strlen($string, $encoding);
+
             for ($i = 0; $i < $strlen; $i++) {
                 $array []= mb_substr($string, $i, 1, $encoding);
             }
         } else {
             $array = str_split($string, 1);
         }
+
         return implode('', static::shuffleArray($array));
     }
 
@@ -350,11 +358,13 @@ class Base
         if (($pos = strpos($string, $wildcard)) === false) {
             return $string;
         }
+
         for ($i = $pos, $last = strrpos($string, $wildcard, $pos) + 1; $i < $last; $i++) {
             if ($string[$i] === $wildcard) {
                 $string[$i] = call_user_func($callback);
             }
         }
+
         return $string;
     }
 
@@ -381,11 +391,13 @@ class Base
             $maxAtOnce = strlen((string) mt_getrandmax()) - 1;
             $numbers = '';
             $i = 0;
+
             while ($i < $nbReplacements) {
                 $size = min($nbReplacements - $i, $maxAtOnce);
                 $numbers .= str_pad(static::randomNumber($size), $size, '0', STR_PAD_LEFT);
                 $i += $size;
             }
+
             for ($i = 0; $i < $nbReplacements; $i++) {
                 $string[$toReplace[$i]] = $numbers[$i];
             }
@@ -418,6 +430,7 @@ class Base
         $string = self::replaceWildcard($string, '*', function () {
             return mt_rand(0, 1) ? '#' : '?';
         });
+
         return static::lexify(static::numerify($string));
     }
 
@@ -457,7 +470,7 @@ class Base
      *
      * @see https://github.com/icomefromthenet/ReverseRegex for a more robust implementation
      *
-     * @param string $regex A regular expression (delimiters are optional)
+     * @param  string $regex A regular expression (delimiters are optional)
      * @return string
      */
     public static function regexify($regex = '')
@@ -495,7 +508,9 @@ class Base
         }, $regex);
         // All [ABC] become B (or A or C)
         $regex = preg_replace_callback('/\[([^\]]+)\]/', function ($matches) {
-            return Base::randomElement(str_split($matches[1]));
+            $randomElement = Base::randomElement(str_split($matches[1]));
+            //[.] should not be a random character, but a literal .
+            return str_replace('.', '\.', $randomElement);
         }, $regex);
         // replace \d with number and \w with letter and . with ascii
         $regex = preg_replace_callback('/\\\w/', 'static::randomLetter', $regex);
@@ -534,10 +549,10 @@ class Base
     /**
      * Chainable method for making any formatter optional.
      *
-     * @param float|int $weight Set the probability of receiving a null value.
-     *                              "0" will always return null, "1" will always return the generator.
-     *                              If $weight is an integer value, then the same system works
-     *                              between 0 (always get false) and 100 (always get true).
+     * @param  float|int  $weight Set the probability of receiving a null value.
+     *                            "0" will always return null, "1" will always return the generator.
+     *                            If $weight is an integer value, then the same system works
+     *                            between 0 (always get false) and 100 (always get true).
      * @return mixed|null
      */
     public function optional($weight = 0.5, $default = null)
@@ -564,9 +579,9 @@ class Base
      * $faker->unique()->randomElement(array(1, 2, 3));
      * </code>
      *
-     * @param bool $reset      If set to true, resets the list of existing values
-     * @param int $maxRetries Maximum number of retries to find a unique value,
-     *                                       After which an OverflowException is thrown.
+     * @param  bool               $reset      If set to true, resets the list of existing values
+     * @param  int                $maxRetries Maximum number of retries to find a unique value,
+     *                                        After which an OverflowException is thrown.
      * @throws \OverflowException When no unique value can be found by iterating $maxRetries times
      *
      * @return UniqueGenerator A proxy class returning only non-existing values
@@ -596,9 +611,9 @@ class Base
      * print_r($values); // [0, 4, 8, 4, 2, 6, 0, 8, 8, 6]
      * </code>
      *
-     * @param Closure $validator  A function returning true for valid values
-     * @param int $maxRetries Maximum number of retries to find a unique value,
-     *                            After which an OverflowException is thrown.
+     * @param  Closure            $validator  A function returning true for valid values
+     * @param  int                $maxRetries Maximum number of retries to find a unique value,
+     *                                        After which an OverflowException is thrown.
      * @throws \OverflowException When no valid value can be found by iterating $maxRetries times
      *
      * @return ValidGenerator A proxy class returning only valid values
