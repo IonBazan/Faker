@@ -26,7 +26,7 @@ final class BaseTest extends TestCase
 
     public function testRandomDigitNotReturnsValidDigit()
     {
-        for ($i = 0; $i <= 9; $i++) {
+        for ($i = 0; $i <= 9; ++$i) {
             self::assertGreaterThanOrEqual(0, BaseProvider::randomDigitNot($i));
             self::assertLessThan(10, BaseProvider::randomDigitNot($i));
             self::assertNotSame(BaseProvider::randomDigitNot($i), $i);
@@ -345,7 +345,8 @@ final class BaseTest extends TestCase
             ['\.\*\?\+', 'escaped characters'],
             ['[.]', 'literal dot in character class'],
             ['.', 'catch-all dot'],
-            ['[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}', 'complex regex']
+            ['\\\\', 'escaped backslash'],
+            ['[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}', 'complex regex'],
         ];
     }
 
@@ -395,21 +396,21 @@ final class BaseTest extends TestCase
         $faker->addProvider(new \Faker\Provider\Base($faker));
         $values = [];
 
-        for ($i=0; $i < 10; $i++) {
+        for ($i=0; $i < 10; ++$i) {
             $values[]= $faker->optional()->randomDigit;
         }
         self::assertContains(null, $values);
 
         $values = [];
 
-        for ($i=0; $i < 10; $i++) {
+        for ($i=0; $i < 10; ++$i) {
             $values[]= $faker->optional(50)->randomDigit;
         }
         self::assertContains(null, $values);
     }
 
     /**
-     * @link https://github.com/fzaninotto/Faker/issues/265
+     * @see https://github.com/fzaninotto/Faker/issues/265
      */
     public function testOptionalPercentageAndWeight()
     {
@@ -453,7 +454,7 @@ final class BaseTest extends TestCase
         $faker->addProvider(new \Faker\Provider\Base($faker));
         $values = [];
 
-        for ($i=0; $i < 10; $i++) {
+        for ($i=0; $i < 10; ++$i) {
             $values[]= $faker->unique()->randomDigit;
         }
         sort($values);
@@ -466,7 +467,7 @@ final class BaseTest extends TestCase
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
 
-        for ($i=0; $i < 11; $i++) {
+        for ($i=0; $i < 11; ++$i) {
             $faker->unique()->randomDigit;
         }
     }
@@ -477,12 +478,12 @@ final class BaseTest extends TestCase
         $faker->addProvider(new \Faker\Provider\Base($faker));
         $values = [];
 
-        for ($i=0; $i < 10; $i++) {
+        for ($i=0; $i < 10; ++$i) {
             $values[]= $faker->unique()->randomDigit;
         }
         $values[]= $faker->unique(true)->randomDigit;
 
-        for ($i=0; $i < 9; $i++) {
+        for ($i=0; $i < 9; ++$i) {
             $values[]= $faker->unique()->randomDigit;
         }
         sort($values);
@@ -508,11 +509,11 @@ final class BaseTest extends TestCase
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
         $values = [];
-        $evenValidator = function ($digit) {
+        $evenValidator = static function ($digit) {
             return $digit % 2 === 0;
         };
 
-        for ($i=0; $i < 50; $i++) {
+        for ($i=0; $i < 50; ++$i) {
             $values[$faker->valid($evenValidator)->randomDigit] = true;
         }
         $uniqueValues = array_keys($values);
@@ -525,11 +526,11 @@ final class BaseTest extends TestCase
         $this->expectException(\OverflowException::class);
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        $evenValidator = function ($digit) {
+        $evenValidator = static function ($digit) {
             return $digit % 2 === 0;
         };
 
-        for ($i=0; $i < 11; $i++) {
+        for ($i=0; $i < 11; ++$i) {
             $faker->valid($evenValidator)->randomElement([1, 3, 5, 7, 9]);
         }
     }

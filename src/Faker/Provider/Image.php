@@ -7,16 +7,19 @@ namespace Faker\Provider;
  */
 class Image extends Base
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     public const BASE_URL = 'https://via.placeholder.com';
 
     /**
      * @var array
+     *
      * @deprecated Categories are no longer used as a list in the placeholder API but referenced as string instead
      */
     protected static $categories = [
         'abstract', 'animals', 'business', 'cats', 'city', 'food', 'nightlife',
-        'fashion', 'people', 'nature', 'sports', 'technics', 'transport'
+        'fashion', 'people', 'nature', 'sports', 'technics', 'transport',
     ];
 
     /**
@@ -46,12 +49,15 @@ class Image extends Base
         $size = sprintf('%dx%d.png', $width, $height);
 
         $imageParts = [];
+
         if ($category !== null) {
             $imageParts[] = $category;
         }
+
         if ($word !== null) {
             $imageParts[] = $word;
         }
+
         if ($randomize === true) {
             $imageParts[] = Lorem::word();
         }
@@ -84,7 +90,7 @@ class Image extends Base
         $word = null,
         $gray = false
     ) {
-        $dir = is_null($dir) ? sys_get_temp_dir() : $dir; // GNU/Linux / OS X / Windows compatible
+        $dir = null === $dir ? sys_get_temp_dir() : $dir; // GNU/Linux / OS X / Windows compatible
         // Validate directory path
         if (!is_dir($dir) || !is_writable($dir)) {
             throw new \InvalidArgumentException(sprintf('Cannot write to directory "%s"', $dir));

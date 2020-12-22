@@ -82,8 +82,10 @@ class Person extends \Faker\Provider\Person
     ];
 
     /**
-     * @param  string|null $gender 'male', 'female' or null for any
+     * @param string|null $gender 'male', 'female' or null for any
+     *
      * @return string
+     *
      * @example 'アオタ アキラ'
      */
     public function kanaName($gender = null)
@@ -100,15 +102,19 @@ class Person extends \Faker\Provider\Person
     }
 
     /**
-     * @param  string|null $gender 'male', 'female' or null for any
+     * @param string|null $gender 'male', 'female' or null for any
+     *
      * @return string
+     *
      * @example 'アキラ'
      */
     public function firstKanaName($gender = null)
     {
         if ($gender === static::GENDER_MALE) {
             return static::firstKanaNameMale();
-        } elseif ($gender === static::GENDER_FEMALE) {
+        }
+
+        if ($gender === static::GENDER_FEMALE) {
             return static::firstKanaNameFemale();
         }
 

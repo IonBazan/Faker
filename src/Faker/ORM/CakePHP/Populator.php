@@ -9,9 +9,6 @@ class Populator
     protected $quantities = [];
     protected $guessers = [];
 
-    /**
-     * @param \Faker\Generator $generator
-     */
     public function __construct(\Faker\Generator $generator)
     {
         $this->generator = $generator;
@@ -47,6 +44,7 @@ class Populator
 
     /**
      * @throws \Exception
+     *
      * @return $this
      */
     public function addGuesser($class)
@@ -65,8 +63,9 @@ class Populator
     }
 
     /**
-     * @param  array $customColumnFormatters
-     * @param  array $customModifiers
+     * @param array $customColumnFormatters
+     * @param array $customModifiers
+     *
      * @return $this
      */
     public function addEntity($entity, $number, $customColumnFormatters = [], $customModifiers = [])
@@ -76,11 +75,13 @@ class Populator
         }
 
         $entity->columnFormatters = $entity->guessColumnFormatters($this);
+
         if ($customColumnFormatters) {
             $entity->mergeColumnFormattersWith($customColumnFormatters);
         }
 
         $entity->modifiers = $entity->guessModifiers($this);
+
         if ($customModifiers) {
             $entity->mergeModifiersWith($customModifiers);
         }
@@ -93,7 +94,8 @@ class Populator
     }
 
     /**
-     * @param  array $options
+     * @param array $options
+     *
      * @return array
      */
     public function execute($options = [])
@@ -101,7 +103,7 @@ class Populator
         $insertedEntities = [];
 
         foreach ($this->quantities as $class => $number) {
-            for ($i = 0; $i < $number; $i++) {
+            for ($i = 0; $i < $number; ++$i) {
                 $insertedEntities[$class][] = $this->entities[$class]->execute($class, $insertedEntities, $options);
             }
         }

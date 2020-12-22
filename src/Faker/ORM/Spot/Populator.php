@@ -16,8 +16,6 @@ class Populator
 
     /**
      * Populator constructor.
-     * @param \Faker\Generator $generator
-     * @param Locator|null     $locator
      */
     public function __construct(\Faker\Generator $generator, Locator $locator = null)
     {
@@ -42,12 +40,14 @@ class Populator
         $useExistingData = false
     ) {
         $mapper = $this->locator->mapper($entityName);
+
         if (null === $mapper) {
             throw new \InvalidArgumentException('No mapper can be found for entity ' . $entityName);
         }
         $entity = new EntityPopulator($mapper, $this->locator, $useExistingData);
 
         $entity->setColumnFormatters($entity->guessColumnFormatters($this->generator));
+
         if ($customColumnFormatters) {
             $entity->mergeColumnFormattersWith($customColumnFormatters);
         }
@@ -69,6 +69,7 @@ class Populator
         if (null === $locator) {
             $locator = $this->locator;
         }
+
         if (null === $locator) {
             throw new \InvalidArgumentException('No entity manager passed to Spot Populator.');
         }
@@ -76,7 +77,7 @@ class Populator
         $insertedEntities = [];
 
         foreach ($this->quantities as $entityName => $number) {
-            for ($i = 0; $i < $number; $i++) {
+            for ($i = 0; $i < $number; ++$i) {
                 $insertedEntities[$entityName][] = $this->entities[$entityName]->execute(
                     $insertedEntities
                 );

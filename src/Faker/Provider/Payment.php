@@ -17,6 +17,7 @@ class Payment extends Base
 
     /**
      * @var array List of card brand masks for generating valid credit card numbers
+     *
      * @see https://en.wikipedia.org/wiki/Payment_card_number Reference for existing prefixes
      * @see https://www.mastercard.us/en-us/issuers/get-support/2-series-bin-expansion.html MasterCard 2017 2-Series BIN Expansion
      */
@@ -30,7 +31,7 @@ class Payment extends Base
             '40240071#######',
             '4485###########',
             '4716###########',
-            '4##############'
+            '4##############',
         ],
         'Visa Retired' => [
             '4539########',
@@ -54,14 +55,14 @@ class Payment extends Base
             '52#############',
             '53#############',
             '54#############',
-            '55#############'
+            '55#############',
         ],
         'American Express' => [
             '34############',
-            '37############'
+            '37############',
         ],
         'Discover Card' => [
-            '6011###########'
+            '6011###########',
         ],
         'JCB' => [
             '3528###########',
@@ -70,7 +71,7 @@ class Payment extends Base
     ];
 
     /**
-     * @var array list of IBAN formats, source: @link https://www.swift.com/standards/data-standards/iban
+     * @var array list of IBAN formats, source: @see https://www.swift.com/standards/data-standards/iban
      */
     protected static $ibanFormats = [
         'AD' => [['n', 4],    ['n', 4],  ['c', 12]],
@@ -150,16 +151,17 @@ class Payment extends Base
     /**
      * Returns the String of a credit card number.
      *
-     * @param  string $type      Supporting any of 'Visa', 'MasterCard', 'American Express', 'Discover' and 'JCB'
-     * @param  bool   $formatted Set to true if the output string should contain one separator every 4 digits
-     * @param  string $separator Separator string for formatting card number. Defaults to dash (-).
+     * @param string $type      Supporting any of 'Visa', 'MasterCard', 'American Express', 'Discover' and 'JCB'
+     * @param bool   $formatted Set to true if the output string should contain one separator every 4 digits
+     * @param string $separator Separator string for formatting card number. Defaults to dash (-).
+     *
      * @return string
      *
      * @example '4485480221084675'
      */
     public static function creditCardNumber($type = null, $formatted = false, $separator = '-')
     {
-        if (is_null($type)) {
+        if (null === $type) {
             $type = static::creditCardType();
         }
         $mask = static::randomElement(static::$cardParams[$type]);
@@ -179,8 +181,10 @@ class Payment extends Base
     }
 
     /**
-     * @param  bool      $valid True (by default) to get a valid expiration date, false to get a maybe valid date
+     * @param bool $valid True (by default) to get a valid expiration date, false to get a maybe valid date
+     *
      * @return \DateTime
+     *
      * @example 04/13
      */
     public function creditCardExpirationDate($valid = true)
@@ -193,18 +197,21 @@ class Payment extends Base
     }
 
     /**
-     * @param  bool   $valid                True (by default) to get a valid expiration date, false to get a maybe valid date
-     * @param  string $expirationDateFormat
+     * @param bool   $valid                True (by default) to get a valid expiration date, false to get a maybe valid date
+     * @param string $expirationDateFormat
+     *
      * @return string
+     *
      * @example '04/13'
      */
     public function creditCardExpirationDateString($valid = true, $expirationDateFormat = null)
     {
-        return $this->creditCardExpirationDate($valid)->format(is_null($expirationDateFormat) ? static::$expirationDateFormat : $expirationDateFormat);
+        return $this->creditCardExpirationDate($valid)->format(null === $expirationDateFormat ? static::$expirationDateFormat : $expirationDateFormat);
     }
 
     /**
-     * @param  bool  $valid True (by default) to get a valid expiration date, false to get a maybe valid date
+     * @param bool $valid True (by default) to get a valid expiration date, false to get a maybe valid date
+     *
      * @return array
      */
     public function creditCardDetails($valid = true)
@@ -215,24 +222,27 @@ class Payment extends Base
             'type'   => $type,
             'number' => static::creditCardNumber($type),
             'name'   => $this->generator->name(),
-            'expirationDate' => $this->creditCardExpirationDateString($valid)
+            'expirationDate' => $this->creditCardExpirationDateString($valid),
         ];
     }
 
     /**
      * International Bank Account Number (IBAN)
      *
-     * @link http://en.wikipedia.org/wiki/International_Bank_Account_Number
-     * @param  string $countryCode ISO 3166-1 alpha-2 country code
-     * @param  string $prefix      for generating bank account number of a specific bank
-     * @param  int    $length      total length without country code and 2 check digits
+     * @see http://en.wikipedia.org/wiki/International_Bank_Account_Number
+     *
+     * @param string $countryCode ISO 3166-1 alpha-2 country code
+     * @param string $prefix      for generating bank account number of a specific bank
+     * @param int    $length      total length without country code and 2 check digits
+     *
      * @return string
      */
     public static function iban($countryCode = null, $prefix = '', $length = null)
     {
-        $countryCode = is_null($countryCode) ? self::randomKey(self::$ibanFormats) : strtoupper($countryCode);
+        $countryCode = null === $countryCode ? self::randomKey(self::$ibanFormats) : strtoupper($countryCode);
 
         $format = !isset(static::$ibanFormats[$countryCode]) ? null : static::$ibanFormats[$countryCode];
+
         if ($length === null) {
             if ($format === null) {
                 $length = 24;
@@ -245,6 +255,7 @@ class Payment extends Base
                 }
             }
         }
+
         if ($format === null) {
             $format = [['n', $length]];
         }
@@ -288,7 +299,9 @@ class Payment extends Base
      * Return the String of a SWIFT/BIC number
      *
      * @example 'RZTIAT22263'
-     * @link    http://en.wikipedia.org/wiki/ISO_9362
+     *
+     * @see    http://en.wikipedia.org/wiki/ISO_9362
+     *
      * @return string Swift/Bic number
      */
     public static function swiftBicNumber()

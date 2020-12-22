@@ -23,9 +23,6 @@ class EntityPopulator
      */
     protected $modifiers = [];
 
-    /**
-     * @param ClassMetadata $class
-     */
     public function __construct(ClassMetadata $class)
     {
         $this->class = $class;
@@ -57,9 +54,6 @@ class EntityPopulator
         $this->columnFormatters = array_merge($this->columnFormatters, $columnFormatters);
     }
 
-    /**
-     * @param array $modifiers
-     */
     public function setModifiers(array $modifiers)
     {
         $this->modifiers = $modifiers;
@@ -73,16 +67,12 @@ class EntityPopulator
         return $this->modifiers;
     }
 
-    /**
-     * @param array $modifiers
-     */
     public function mergeModifiersWith(array $modifiers)
     {
         $this->modifiers = array_merge($this->modifiers, $modifiers);
     }
 
     /**
-     * @param  \Faker\Generator $generator
      * @return array
      */
     public function guessColumnFormatters(\Faker\Generator $generator)
@@ -97,11 +87,13 @@ class EntityPopulator
             }
 
             $size = $this->class->fieldMappings[$fieldName]['length'] ?? null;
+
             if ($formatter = $nameGuesser->guessFormat($fieldName, $size)) {
                 $formatters[$fieldName] = $formatter;
 
                 continue;
             }
+
             if ($formatter = $columnTypeGuesser->guessFormat($fieldName, $this->class)) {
                 $formatters[$fieldName] = $formatter;
 
@@ -117,6 +109,7 @@ class EntityPopulator
             $relatedClass = $this->class->getAssociationTargetClass($assocName);
 
             $unique = $optional = false;
+
             if ($this->class instanceof \Doctrine\ORM\Mapping\ClassMetadata) {
                 $mappings = $this->class->getAssociationMappings();
 
@@ -146,15 +139,16 @@ class EntityPopulator
             }
 
             $index = 0;
-            $formatters[$assocName] = function ($inserted) use ($relatedClass, &$index, $unique, $optional, $generator) {
+            $formatters[$assocName] = static function ($inserted) use ($relatedClass, &$index, $unique, $optional, $generator) {
                 if (isset($inserted[$relatedClass])) {
                     if ($unique) {
                         $related = null;
+
                         if (isset($inserted[$relatedClass][$index]) || !$optional) {
                             $related = $inserted[$relatedClass][$index];
                         }
 
-                        $index++;
+                        ++$index;
 
                         return $related;
                     }
@@ -171,8 +165,9 @@ class EntityPopulator
 
     /**
      * Insert one new record using the Entity class.
-     * @param  ObjectManager   $manager
-     * @param  bool            $generateId
+     *
+     * @param bool $generateId
+     *
      * @return EntityPopulator
      */
     public function execute(ObjectManager $manager, $insertedEntities, $generateId = false)
@@ -213,6 +208,7 @@ class EntityPopulator
                 }
                 // Try a standard setter if it's available, otherwise fall back on reflection
                 $setter = sprintf('set%s', ucfirst($field));
+
                 if (is_callable([$obj, $setter])) {
                     $obj->$setter($value);
                 } else {
@@ -230,7 +226,6 @@ class EntityPopulator
     }
 
     /**
-     * @param  ObjectManager $manager
      * @return int|null
      */
     private function generateId($obj, $column, ObjectManager $manager)

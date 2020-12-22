@@ -102,6 +102,7 @@ final class ImageTest extends TestCase
 
         $file = Image::image(sys_get_temp_dir());
         self::assertFileExists($file);
+
         if (function_exists('getimagesize')) {
             list($width, $height, $type, $attr) = getimagesize($file);
             self::assertEquals(640, $width);
@@ -110,6 +111,7 @@ final class ImageTest extends TestCase
         } else {
             self::assertEquals('png', pathinfo($file, PATHINFO_EXTENSION));
         }
+
         if (file_exists($file)) {
             unlink($file);
         }

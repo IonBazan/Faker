@@ -53,7 +53,7 @@ class EntityPopulator
         $schema = $table->schema();
         $pk = $schema->primaryKey();
         $guessers = $populator->getGuessers() + ['ColumnTypeGuesser' => new ColumnTypeGuesser($populator->getGenerator())];
-        $isForeignKey = function ($column) use ($table) {
+        $isForeignKey = static function ($column) use ($table) {
             foreach ($table->associations()->type('BelongsTo') as $assoc) {
                 if ($column == $assoc->foreignKey()) {
                     return true;
@@ -62,7 +62,6 @@ class EntityPopulator
 
             return false;
         };
-
 
         foreach ($schema->columns() as $column) {
             if ($column == $pk[0] || $isForeignKey($column)) {
@@ -97,12 +96,13 @@ class EntityPopulator
                 $foreignModel = $table->alias();
 
                 $foreignKeys = [];
+
                 if (!empty($insertedEntities[$foreignModel])) {
                     $foreignKeys = $insertedEntities[$foreignModel];
                 } else {
                     $foreignKeys = $table->find('all')
                     ->select(['id'])
-                    ->map(function ($row) {
+                    ->map(static function ($row) {
                         return $row->id;
                     })
                     ->toArray();
@@ -133,7 +133,7 @@ class EntityPopulator
         $entity = $table->newEntity();
 
         foreach ($this->columnFormatters as $column => $format) {
-            if (!is_null($format)) {
+            if (null !== $format) {
                 $entity->{$column} = is_callable($format) ? $format($insertedEntities, $table) : $format;
             }
         }
@@ -147,6 +147,7 @@ class EntityPopulator
         }
 
         $pk = $table->primaryKey();
+
         if (is_string($pk)) {
             return $entity->{$pk};
         }
@@ -162,6 +163,7 @@ class EntityPopulator
     protected function getTable($class)
     {
         $options = [];
+
         if (!empty($this->connectionName)) {
             $options['connection'] = $this->connectionName;
         }

@@ -9,29 +9,26 @@ class ColumnTypeGuesser
 {
     protected $generator;
 
-    /**
-     * @param \Faker\Generator $generator
-     */
     public function __construct(\Faker\Generator $generator)
     {
         $this->generator = $generator;
     }
 
     /**
-     * @param  ColumnMap     $column
      * @return \Closure|null
      */
     public function guessFormat(ColumnMap $column)
     {
         $generator = $this->generator;
+
         if ($column->isTemporal()) {
             if ($column->getType() == PropelTypes::BU_DATE || $column->getType() == PropelTypes::BU_TIMESTAMP) {
-                return function () use ($generator) {
+                return static function () use ($generator) {
                     return $generator->dateTime;
                 };
             }
 
-            return function () use ($generator) {
+            return static function () use ($generator) {
                 return $generator->dateTimeAD;
             };
         }
@@ -40,7 +37,7 @@ class ColumnTypeGuesser
         switch ($type) {
             case PropelTypes::BOOLEAN:
             case PropelTypes::BOOLEAN_EMU:
-                return function () use ($generator) {
+                return static function () use ($generator) {
                     return $generator->boolean;
                 };
 
@@ -48,34 +45,34 @@ class ColumnTypeGuesser
             case PropelTypes::DECIMAL:
                 $size = $column->getSize();
 
-                return function () use ($generator, $size) {
+                return static function () use ($generator, $size) {
                     return $generator->randomNumber($size + 2) / 100;
                 };
 
             case PropelTypes::TINYINT:
-                return function () use ($generator) {
+                return static function () use ($generator) {
                     return $generator->numberBetween(0, 127);
                 };
 
             case PropelTypes::SMALLINT:
-                return function () use ($generator) {
+                return static function () use ($generator) {
                     return $generator->numberBetween(0, 32767);
                 };
 
             case PropelTypes::INTEGER:
-                return function () use ($generator) {
+                return static function () use ($generator) {
                     return $generator->numberBetween(0, 2147483647);
                 };
 
             case PropelTypes::BIGINT:
-                return function () use ($generator) {
+                return static function () use ($generator) {
                     return $generator->numberBetween(0, PHP_INT_MAX);
                 };
 
             case PropelTypes::FLOAT:
             case PropelTypes::DOUBLE:
             case PropelTypes::REAL:
-                return function () use ($generator) {
+                return static function () use ($generator) {
                     return $generator->randomFloat();
                 };
 
@@ -85,7 +82,7 @@ class ColumnTypeGuesser
             case PropelTypes::VARBINARY:
                 $size = $column->getSize();
 
-                return function () use ($generator, $size) {
+                return static function () use ($generator, $size) {
                     return $generator->text($size);
                 };
 
@@ -94,14 +91,14 @@ class ColumnTypeGuesser
             case PropelTypes::CLOB:
             case PropelTypes::CLOB_EMU:
             case PropelTypes::BLOB:
-                return function () use ($generator) {
+                return static function () use ($generator) {
                     return $generator->text;
                 };
 
             case PropelTypes::ENUM:
                 $valueSet = $column->getValueSet();
 
-                return function () use ($generator, $valueSet) {
+                return static function () use ($generator, $valueSet) {
                     return $generator->randomElement($valueSet);
                 };
 

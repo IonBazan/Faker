@@ -31,7 +31,7 @@ class Internet extends Base
     ];
 
     /**
-     * @link https://tools.ietf.org/html/rfc1918#section-3
+     * @see https://tools.ietf.org/html/rfc1918#section-3
      */
     protected static $localIpBlocks = [
         ['10.0.0.0', '10.255.255.255'],
@@ -89,7 +89,7 @@ class Internet extends Base
         $domains = [
             'example.com',
             'example.org',
-            'example.net'
+            'example.net',
         ];
 
         return static::randomElement($domains);
@@ -181,6 +181,7 @@ class Internet extends Base
         if ($nbWords <= 0) {
             return '';
         }
+
         if ($variableNbWords) {
             $nbWords = (int) ($nbWords * self::numberBetween(60, 140) / 100) + 1;
         }
@@ -204,8 +205,8 @@ class Internet extends Base
     {
         $res = [];
 
-        for ($i=0; $i < 8; $i++) {
-            $res []= dechex(self::numberBetween(0, 65535));
+        for ($i=0; $i < 8; ++$i) {
+            $res[]= dechex(self::numberBetween(0, 65535));
         }
 
         return implode(':', $res);
@@ -228,7 +229,7 @@ class Internet extends Base
     {
         $mac = [];
 
-        for ($i=0; $i < 6; $i++) {
+        for ($i=0; $i < 6; ++$i) {
             $mac[] = sprintf('%02X', self::numberBetween(0, 0xff));
         }
 
@@ -242,7 +243,8 @@ class Internet extends Base
         }
 
         $transId = 'Any-Latin; Latin-ASCII; NFD; [:Nonspacing Mark:] Remove; NFC;';
-        if (class_exists('Transliterator', false) && $transliterator = \Transliterator::create($transId)) {
+
+        if (class_exists(\Transliterator::class, false) && $transliterator = \Transliterator::create($transId)) {
             $transString = $transliterator->transliterate($string);
         } else {
             $transString = static::toAscii($string);
