@@ -25,9 +25,13 @@ class UniqueGenerator
      * Catch and proxy all generator calls but return only unique values
      *
      * @param string $attribute
+     *
+     * @deprecated Use a method instead.
      */
     public function __get($attribute)
     {
+        trigger_deprecation('fakerphp/faker', '1.14', 'Accessing property "%s" is deprecated, use "%s()" instead.', $attribute, $attribute);
+
         return $this->__call($attribute, []);
     }
 
@@ -52,7 +56,7 @@ class UniqueGenerator
                 throw new \OverflowException(sprintf('Maximum retries of %d reached without finding a unique value', $this->maxRetries));
             }
         } while (array_key_exists(serialize($res), $this->uniques[$name]));
-        $this->uniques[$name][serialize($res)]= null;
+        $this->uniques[$name][serialize($res)] = null;
 
         return $res;
     }

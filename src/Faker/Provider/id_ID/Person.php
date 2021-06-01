@@ -264,8 +264,6 @@ class Person extends \Faker\Provider\Person
     /**
      * Return last name for male
      *
-     * @access public
-     *
      * @return string last name
      */
     public static function lastNameMale()
@@ -276,8 +274,6 @@ class Person extends \Faker\Provider\Person
     /**
      * Return last name for female
      *
-     * @access public
-     *
      * @return string last name
      */
     public static function lastNameFemale()
@@ -287,8 +283,6 @@ class Person extends \Faker\Provider\Person
 
     /**
      * For academic title
-     *
-     * @access public
      *
      * @return string suffix
      */
@@ -309,7 +303,7 @@ class Person extends \Faker\Provider\Person
      */
     public function nik($gender = null, $birthDate = null)
     {
-        # generate first numbers (region data)
+        // generate first numbers (region data)
         $nik = $this->birthPlaceCode();
         $nik .= $this->generator->numerify('##');
 
@@ -321,7 +315,7 @@ class Person extends \Faker\Provider\Person
             $gender = $this->generator->randomElement([self::GENDER_MALE, self::GENDER_FEMALE]);
         }
 
-        # if gender is female, add 40 to days
+        // if gender is female, add 40 to days
         if ($gender == self::GENDER_FEMALE) {
             $nik .= $birthDate->format('d') + 40;
         } else {
@@ -330,7 +324,7 @@ class Person extends \Faker\Provider\Person
 
         $nik .= $birthDate->format('my');
 
-        # add last random digits
+        // add last random digits
         $nik .= $this->generator->numerify('####');
 
         return $nik;

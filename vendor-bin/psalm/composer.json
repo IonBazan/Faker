@@ -1,12 +1,13 @@
 {
     "require": {
         "php": "^7.1 || ^8.0",
-        "vimeo/psalm": "^4.3.1"
+        "vimeo/psalm": "^4.7.3"
     },
     "config": {
         "platform": {
             "php": "7.1.33"
         },
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "sort-packages": true
     }
 }

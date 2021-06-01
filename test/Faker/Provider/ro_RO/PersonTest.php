@@ -6,6 +6,9 @@ use Faker\Provider\DateTime;
 use Faker\Provider\ro_RO\Person;
 use Faker\Test\TestCase;
 
+/**
+ * @group legacy
+ */
 final class PersonTest extends TestCase
 {
     public const TEST_CNP_REGEX = '/^[1-9][0-9]{2}(?:0[1-9]|1[012])(?:0[1-9]|[12][0-9]|3[01])(?:0[1-9]|[123][0-9]|4[0-6]|5[12])[0-9]{3}[0-9]$/';
@@ -191,12 +194,12 @@ final class PersonTest extends TestCase
 
     protected function isValidFemaleCnp($value)
     {
-        return $this->isValidCnp($value) && in_array($value[0], [2, 4, 6, 8, 9]);
+        return $this->isValidCnp($value) && in_array($value[0], [2, 4, 6, 8, 9], false);
     }
 
     protected function isValidMaleCnp($value)
     {
-        return $this->isValidCnp($value) && in_array($value[0], [1, 3, 5, 7, 9]);
+        return $this->isValidCnp($value) && in_array($value[0], [1, 3, 5, 7, 9], false);
     }
 
     protected function isValidCnp($cnp)

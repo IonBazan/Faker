@@ -5,6 +5,9 @@ namespace Faker\Test\Provider\fr_FR;
 use Faker\Provider\fr_FR\PhoneNumber;
 use Faker\Test\TestCase;
 
+/**
+ * @group legacy
+ */
 final class PhoneNumberTest extends TestCase
 {
     public function testMobileNumber()
@@ -41,6 +44,14 @@ final class PhoneNumberTest extends TestCase
     {
         $serviceNumberFormat = $this->faker->phoneNumber08WithSeparator();
         self::assertMatchesRegularExpression('/^((0|1|2)\d{1}|9[^46])( \d{2}){3}$/', $serviceNumberFormat);
+    }
+
+    public function testE164PhoneNumberFormat()
+    {
+        for ($i = 0; $i < 10; ++$i) {
+            $number = $this->faker->e164PhoneNumber();
+            self::assertMatchesRegularExpression('/^\+33\d{1,13}$/', $number);
+        }
     }
 
     protected function getProviders(): iterable

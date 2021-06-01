@@ -1,12 +1,13 @@
 {
     "require": {
         "php": "^7.1 || ^8.0",
-        "friendsofphp/php-cs-fixer": "^2.17.2"
+        "friendsofphp/php-cs-fixer": "^2.18.6"
     },
     "config": {
         "platform": {
             "php": "7.1.33"
         },
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "sort-packages": true
     }
 }

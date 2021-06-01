@@ -230,7 +230,7 @@ class EntityPopulator
      */
     private function generateId($obj, $column, ObjectManager $manager)
     {
-        /* @var $repository \Doctrine\Common\Persistence\ObjectRepository */
+        /** @var \Doctrine\Common\Persistence\ObjectRepository $repository */
         $repository = $manager->getRepository(get_class($obj));
         $result = $repository->createQueryBuilder('e')
                 ->select(sprintf('e.%s', $column))
@@ -242,7 +242,7 @@ class EntityPopulator
 
         do {
             $id = mt_rand();
-        } while (in_array($id, $ids));
+        } while (in_array($id, $ids, false));
 
         return $id;
     }

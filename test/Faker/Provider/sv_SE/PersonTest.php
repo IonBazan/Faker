@@ -6,6 +6,9 @@ use Faker\Calculator\Luhn;
 use Faker\Provider\sv_SE\Person;
 use Faker\Test\TestCase;
 
+/**
+ * @group legacy
+ */
 final class PersonTest extends TestCase
 {
     public function provideSeedAndExpectedReturn()
@@ -46,6 +49,24 @@ final class PersonTest extends TestCase
     {
         $pin = $this->faker->personalIdentityNumber(null, 'female');
         self::assertEquals(0, $pin[9] % 2);
+    }
+
+    public function testBirthNumberNot000()
+    {
+        $faker = $this->faker;
+        $faker->seed(97270);
+        $pin = $this->faker->personalIdentityNumber();
+
+        self::assertNotEquals('000', substr($pin, 7, 3));
+    }
+
+    public function testBirthNumberGeneratesEvenValuesForFemales()
+    {
+        $faker = $this->faker;
+        $faker->seed(372920);
+        $pin = $this->faker->personalIdentityNumber(null, 'female');
+
+        self::assertNotEquals('000', substr($pin, 7, 3));
     }
 
     protected function getProviders(): iterable

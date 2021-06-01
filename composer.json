@@ -14,7 +14,9 @@
         }
     ],
     "require": {
-        "php": "^7.1 || ^8.0"
+        "php": "^7.1 || ^8.0",
+        "psr/container": "^1.0",
+        "symfony/deprecation-contracts": "^2.2"
     },
     "require-dev": {
         "ext-intl": "*",
@@ -28,7 +30,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Faker\\Test\\": "test/Faker/"
+            "Faker\\Test\\": "test/Faker/",
+            "Faker\\Test\\Fixture\\": "test/Fixture/"
         }
     },
     "conflict": {
@@ -42,5 +45,10 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "v1.15-dev"
+        }
     }
 }

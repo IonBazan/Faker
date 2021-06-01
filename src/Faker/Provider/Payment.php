@@ -219,9 +219,9 @@ class Payment extends Base
         $type = static::creditCardType();
 
         return [
-            'type'   => $type,
+            'type' => $type,
             'number' => static::creditCardNumber($type),
-            'name'   => $this->generator->name(),
+            'name' => $this->generator->name(),
             'expirationDate' => $this->creditCardExpirationDateString($valid),
         ];
     }
@@ -250,7 +250,7 @@ class Payment extends Base
                 $length = 0;
 
                 foreach ($format as $part) {
-                    list($class, $groupCount) = $part;
+                    [$class, $groupCount] = $part;
                     $length += $groupCount;
                 }
             }
@@ -263,7 +263,7 @@ class Payment extends Base
         $expandedFormat = '';
 
         foreach ($format as $item) {
-            list($class, $length) = $item;
+            [$class, $length] = $item;
             $expandedFormat .= str_repeat($class, $length);
         }
 

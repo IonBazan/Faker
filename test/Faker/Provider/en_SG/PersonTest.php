@@ -5,6 +5,9 @@ namespace Faker\Test\Provider\en_SG;
 use Faker\Provider\en_SG\Person;
 use Faker\Test\TestCase;
 
+/**
+ * @group legacy
+ */
 final class PersonTest extends TestCase
 {
     public function testNric(): void
@@ -62,7 +65,7 @@ final class PersonTest extends TestCase
             $checksum += (int) $id[$key + 1] * $weight;
         }
 
-        $checksumArr = in_array($prefix, ['F', 'G'])
+        $checksumArr = in_array($prefix, ['F', 'G'], true)
             ? ['X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K']
             : ['J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'];
 

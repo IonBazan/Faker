@@ -5,6 +5,9 @@ namespace Faker\Test\Provider\en_US;
 use Faker\Provider\en_US\PhoneNumber;
 use Faker\Test\TestCase;
 
+/**
+ * @group legacy
+ */
 final class PhoneNumberTest extends TestCase
 {
     public function testPhoneNumber()
@@ -66,6 +69,14 @@ final class PhoneNumberTest extends TestCase
 
             // Test format
             self::assertMatchesRegularExpression('/^(\+?1)?([ -.]*\d{3}[ -.]*| *\(\d{3}\) *)\d{3}[-.]?\d{4}$/', $number);
+        }
+    }
+
+    public function testE164PhoneNumberFormat()
+    {
+        for ($i = 0; $i < 10; ++$i) {
+            $number = $this->faker->e164PhoneNumber();
+            self::assertMatchesRegularExpression('/^\+1[2-9]\d{9}$/', $number);
         }
     }
 

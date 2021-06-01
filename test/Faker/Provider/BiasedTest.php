@@ -7,6 +7,7 @@ use Faker\Test\TestCase;
 
 /**
  * @group seed
+ * @group legacy
  */
 final class BiasedTest extends TestCase
 {
